@@ -32,3 +32,9 @@ A character vector of file keys (or a data.frame if \code{full_info = TRUE})
 \description{
 List GeoParquet files in an S3 bucket (with optional prefix)
 }
+\examples{
+# list files from a test bucket
+list_s3_geoparquet_files(bucket = "geolink-test")
+
+
+}
