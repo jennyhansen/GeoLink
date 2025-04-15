@@ -3,3 +3,7 @@
 .RData
 .Ruserdata
 temp_remote_check/
+raster/
+vector/
+plots/
+scripts/
