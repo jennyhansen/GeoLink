@@ -15,9 +15,6 @@ read_geoparquet_from_s3 <- function(s3_path,
                                     use_https = TRUE,
                                     virtual = FALSE,
                                     ...) {
-  stopifnot(requireNamespace("arrow"),
-            requireNamespace("sfarrow"),
-            requireNamespace("sf"))
   
   tryCatch({
     # Set up S3 file system using arrow
@@ -54,6 +51,10 @@ read_geoparquet_from_s3 <- function(s3_path,
 #' @param virtual Logical, use virtual-hosted-style URLs (default FALSE)
 #' @param full_info Logical, return a data.frame with file size and date (default TRUE)
 #'
+#' @examples
+#' # list files from a test bucket
+#' list_s3_geoparquet_files(bucket = "geolink-test")
+#' 
 #' @return A character vector of file keys (or a data.frame if `full_info = TRUE`)
 #' @export
 list_s3_geoparquet_files <- function(bucket,
@@ -62,7 +63,6 @@ list_s3_geoparquet_files <- function(bucket,
                                      use_https = TRUE,
                                      virtual = FALSE,
                                      full_info = TRUE) {
-  stopifnot(requireNamespace("aws.s3"))
   
   # Attempt listing
   tryCatch({
