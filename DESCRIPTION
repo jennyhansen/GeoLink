@@ -1,9 +1,12 @@
 Package: GeoLink
-Title: What the Package Does (One Line, Title Case)
+Title: Tools for Reading, Writing, and Listing Spatial Data on S3
 Version: 0.0.0.9000
 Authors@R: 
     person("First", "Last", , "first.last@example.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
+Description: Provides simple, general functions for interacting with spatial data
+    stored on S3-compatible object storage, supporting GeoParquet, GeoPackage,
+    and GeoTIFF formats. Designed for streamlined use in collaborative and 
+    cloud-based workflows.
 License: GPL (>= 3)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
