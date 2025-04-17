@@ -12,4 +12,5 @@ Imports:
     arrow,
     sfarrow,
     sf, 
-    aws.s3
+    aws.s3,
+    terra
