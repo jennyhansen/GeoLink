@@ -1,6 +1,6 @@
 Package: GeoLink
 Title: Tools for Reading, Writing, and Listing Spatial Data on S3
-Version: 0.0.0.9000
+Version: 0.0.0.9001
 Authors@R: 
     person("First", "Last", , "first.last@example.com", role = c("aut", "cre"))
 Description: Provides simple, general functions for interacting with spatial data
