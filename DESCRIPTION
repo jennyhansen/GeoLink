@@ -7,7 +7,7 @@ Description: Provides simple, general functions for interacting with spatial dat
     stored on S3-compatible object storage, supporting GeoParquet, GeoPackage,
     and GeoTIFF formats. Designed for streamlined use in collaborative and 
     cloud-based workflows.
-License: GPL (>= 3)
+License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
