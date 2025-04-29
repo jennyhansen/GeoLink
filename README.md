@@ -5,11 +5,11 @@
 
 ## ✨ Features
 
-- Read geospatial data* from S3 buckets into R environment
-- Write geospatial data* to S3 buckets from R environment
+- Read geospatial data\* from S3 buckets into R environment
+- Write geospatial data\* to S3 buckets from R environment
 - List available files in individual buckets 
 
-* currently .parquet, .gpkg, and .tif file types are available
+\* currently .parquet, .gpkg, and .tif file types are available
 
 ## 📦 Installation
 
