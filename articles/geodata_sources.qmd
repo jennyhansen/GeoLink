@@ -11,4 +11,4 @@ This page provides an overview of the main geospatial data repositories used in 
 |------------------|-----------------------------------------------------------------------------|-----------------|
 | GeoSpatialData   | Central folder on the R drive with raster, vector, and grid data            | [GeoSpatialData on R Drive](data_geospatialdata.qmd) |
 | GRASS GIS        | GRASS-based spatial database used for modeling and processing workflows     | [GRASS GIS Environment](data_grass.qmd) |
-| GIS Database     | PostgreSQL/PostGIS database containing national vector layers               | [PostgreSQL GIS Database](data_gisdb.qmd) |
+| GIS Database     | PostgreSQL/PostGIS database containing processed data ready for modeling    | [PostgreSQL GIS Database](data_gisdb.qmd) |

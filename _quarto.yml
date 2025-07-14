@@ -8,10 +8,6 @@ website:
     left:
       - href: index.qmd
         text: Home
-      - href: reference.qmd
-        text: Reference
-      - href: articles/index.qmd
-        text: Articles
       - text: Data Sources
         menu:
           - href: articles/geodata_sources.qmd
