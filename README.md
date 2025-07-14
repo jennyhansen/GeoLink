@@ -23,14 +23,8 @@ You can install GeoLink from GitHub using:
 # If remotes isn't installed yet
 install.packages("remotes")
 
-# Install GeoLink from your personal GitHub
+# Install GeoLink from your GitHub
 remotes::install_github("jennyhansen/GeoLink")
-```
-
-If installed from NINA's organizational repo:
-
-```r
-remotes::install_github("NINAnor/GeoLink")
 ```
 
 ---
