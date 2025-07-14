@@ -1,0 +1,53 @@
+---
+title: "GeoSpatialData folder on the R Drive"
+format: html
+editor: 
+  markdown: 
+    wrap: 72
+---
+
+# 🗺️ GeoSpatialData on the R Drive
+
+The `GeoSpatialData` folder on the R: drive is a centralized collection
+of raster, vector, and gridded spatial datasets used in many of NINA’s
+GIS workflows. It includes base layers such as:
+
+-   Land cover and vegetation maps
+-   Elevation models (DEM)
+-   Hydrology and slope layers
+-   Municipality boundaries and grids (e.g., SSB grids)
+-   Gridded climate data
+
+
+There is a data inventory Excel spreadsheet at
+`R:\GeoSpatialData\Data\_Inventory.xlsx` where you can find the most current 
+overview of the data available on the R drive. Data is generally grouped into broad
+categories such as AdministrativeUnits, Elevation, Hydrography,
+Landcover, StatisticalUnits, Topography, etc.
+
+Within each subfolder of a category, you can expect to see five
+subfolders:
+
+1.  Converted
+2.  Original
+3.  Processed
+4.  Scripts
+5.  Shared
+
+Original (raw) data is in the Original subfolder and is what most people
+generally work with. The Converted subfolder is usually empty, but some
+may contain data, e.g. Norway_AdministrativeUnits in
+AdministrativeUnits. Many of the datasets will have files in the
+Processed folder. This may include data converted from one type to
+another, data clipped or subset to a specific region, changes in
+projections (CRS), etc. The Scripts subfolder will contain the relevant
+scripts used to process or convert data, e.g. from SOSI to shp. The
+purpose of the Shared subfolder is unknown.
+
+GeoLink contains a pair of helper functions to find and import data from
+the GeoSpatialData folder on the R drive. Note that these only work when
+working from the \[NINA RStudio server\] (https://rstudio.nina.no).
+
+# GeoLink functions for R:\GeoSpatialData
+
+
