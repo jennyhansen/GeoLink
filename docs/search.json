@@ -33,5 +33,19 @@
     "title": "Function Reference",
     "section": "",
     "text": "This page will list exported functions from the GeoLink package."
+  },
+  {
+    "objectID": "articles/geodata_sources.html",
+    "href": "articles/geodata_sources.html",
+    "title": "Geospatial Data Sources",
+    "section": "",
+    "text": "This page provides an overview of the main geospatial data repositories used in the GeoLink project, with links to detailed pages for each source."
+  },
+  {
+    "objectID": "articles/geodata_sources.html#overview-of-data-sources",
+    "href": "articles/geodata_sources.html#overview-of-data-sources",
+    "title": "Geospatial Data Sources",
+    "section": "🗂️ Overview of Data Sources",
+    "text": "🗂️ Overview of Data Sources\n\n\n\nSource\nDescription\nLink to details\n\n\n\n\nGeoSpatialData\nCentral folder on the R drive with raster, vector, and grid data\nGeoSpatialData on R Drive\n\n\nGRASS GIS\nGRASS-based spatial database used for modeling and processing workflows\nGRASS GIS Environment\n\n\nGIS Database\nPostgreSQL/PostGIS database containing national vector layers\nPostgreSQL GIS Database"
   }
 ]

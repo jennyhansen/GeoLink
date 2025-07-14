@@ -1,0 +1,6 @@
+---
+title: "Articles"
+format: html
+---
+
+This page will contain longer documentation, vignettes, or use-case tutorials.

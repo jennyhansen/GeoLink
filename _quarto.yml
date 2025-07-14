@@ -12,9 +12,20 @@ website:
         text: Reference
       - href: articles/index.qmd
         text: Articles
+      - text: Data Sources
+        menu:
+          - href: articles/data_sources.qmd
+            text: Overview
+          - href: articles/data_geospatialdata.qmd
+            text: GeoSpatialData on R Drive
+          - href: articles/data_grass.qmd
+            text: GRASS GIS
+          - href: articles/data_gisdb.qmd
+            text: PostgreSQL GIS Database
 
 format:
   html:
     theme: cosmo
     toc: true
+
 
