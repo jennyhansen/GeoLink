@@ -23,7 +23,7 @@ You can install GeoLink from GitHub using:
 # If remotes isn't installed yet
 install.packages("remotes")
 
-# Install GeoLink from your GitHub
+# Install GeoLink from GitHub
 remotes::install_github("jennyhansen/GeoLink")
 ```
 
