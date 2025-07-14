@@ -1,0 +1,20 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "GeoLink"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - href: reference.qmd
+        text: Reference
+      - href: articles/index.qmd
+        text: Articles
+
+format:
+  html:
+    theme: cosmo
+    toc: true
+
