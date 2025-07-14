@@ -57,9 +57,6 @@ list_from_rgsd("Elevation/Fenoscandia_DEM_10")
 # Import a raster from the R drive
 import_from_rgsd("Elevation/Fenoscandia_DEM_10/Original/dem_10m_fenoscandia.tif")
 
-# Import a layer from a GeoPackage
-import_from_rgsd("LandCover/vegetation.gpkg", layer = "dominant_types")
-
 # Import a shapefile using a full path
 import_from_rgsd("/data/R/GeoSpatialData/Buildings/.../N50_TouristCabins.shp")
 ```
