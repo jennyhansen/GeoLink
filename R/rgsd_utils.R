@@ -19,7 +19,7 @@
 #' list_from_rgsd("Hydrography/Norway_Catchments/Original", type = "file")
 #'
 #' # Use a full path to a Land Cover folder
-#' list_from_rgsd("/data/R/GeoSpatialData/LandCover/Europe/Copernicus_HighResolutionLayers/Original", type = "both")
+#' list_from_rgsd("/data/R/GeoSpatialData/LandCover/Europe_Copernicus_HighResolutionLayers/Original", type = "both")
 list_from_rgsd <- function(folder = "/data/R/GeoSpatialData", 
                            type = c("both", "file", "folder")) {
   type <- match.arg(type)
