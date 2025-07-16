@@ -1,0 +1,6 @@
+---
+title: "Function Reference"
+format: html
+---
+
+This page will list exported functions from the GeoLink package.

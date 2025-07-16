@@ -11,3 +11,5 @@ vector/
 raster/
 scripts/
 plots/
+
+/.quarto/

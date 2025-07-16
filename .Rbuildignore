@@ -1,3 +1,13 @@
 ^LICENSE\.md$
 ^.*\.Rproj$
 ^\.Rproj\.user$
+^\.quarto$
+^_quarto.yml$
+^index.qmd$
+^GeoLink.qmd$
+^articles$
+^docs$
+^_site$
+^reference.qmd$
+^scripts$
+^vector$

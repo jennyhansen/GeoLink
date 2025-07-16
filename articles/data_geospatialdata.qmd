@@ -46,8 +46,10 @@ purpose of the Shared subfolder is unknown.
 
 GeoLink contains a pair of helper functions to find and import data from
 the GeoSpatialData folder on the R drive. Note that these only work when
-working from the \[NINA RStudio server\] (https://rstudio.nina.no).
+working from the \[NINA RStudio server\] (https://rstudio.nina.no) or the GIS
+server (accessed through Omnissa Horizon Client.
 
 # GeoLink functions for R:\GeoSpatialData
+
 
 

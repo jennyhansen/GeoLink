@@ -1,12 +1,11 @@
 Package: GeoLink
-Title: Tools for Reading, Writing, and Listing Spatial Data on S3
+Title: Tools for Reading, Writing, and Importing Spatial Data at NINA
 Version: 0.0.0.9001
 Authors@R: 
     person("First", "Last", , "first.last@example.com", role = c("aut", "cre"))
 Description: Provides simple, general functions for interacting with spatial data
-    stored on S3-compatible object storage, supporting GeoParquet, GeoPackage,
-    and GeoTIFF formats. Designed for streamlined use in collaborative and 
-    cloud-based workflows.
+    stored on internal NINA servers and S3 buckets. GeoParquet, GeoPackage,
+    GeoTIFF, shapefile (shp), and file geodatabse (gdb) formats are supported. 
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)

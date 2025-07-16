@@ -1,0 +1,6 @@
+---
+title: "Welcome to GeoLink"
+format: html
+---
+
+This is the landing page for the GeoLink package website.

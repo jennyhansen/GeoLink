@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>GeoLink - GeoSpatialData folder on the R Drive</title>
+<title>GeoLink</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,22 +23,22 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../">
-<script src="../site_libs/quarto-html/quarto.js"></script>
-<script src="../site_libs/quarto-html/popper.min.js"></script>
-<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -77,7 +77,7 @@ ul.task-list li input[type="checkbox"] {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="../index.html">
+    <a class="navbar-brand" href="./index.html">
     <span class="navbar-title">GeoLink</span>
     </a>
   </div>
@@ -88,32 +88,17 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../index.html"> 
+    <a class="nav-link" href="./index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
-  <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-data-sources" role="button" data-bs-toggle="dropdown" aria-expanded="false">
- <span class="menu-text">Data Sources</span>
-    </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-data-sources">    
-        <li>
-    <a class="dropdown-item" href="../articles/geodata_sources.html">
- <span class="dropdown-text">Overview</span></a>
+  <li class="nav-item">
+    <a class="nav-link" href="./reference.html"> 
+<span class="menu-text">Reference</span></a>
   </li>  
-        <li>
-    <a class="dropdown-item" href="../articles/data_geospatialdata.html">
- <span class="dropdown-text">GeoSpatialData on R Drive</span></a>
+  <li class="nav-item">
+    <a class="nav-link" href="./articles/index.html"> 
+<span class="menu-text">Articles</span></a>
   </li>  
-        <li>
-    <a class="dropdown-item" href="../articles/data_grass.html">
- <span class="dropdown-text">GRASS GIS</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../articles/data_gisdb.html">
- <span class="dropdown-text">PostgreSQL GIS Database</span></a>
-  </li>  
-    </ul>
-  </li>
 </ul>
           </div> <!-- /navcollapse -->
           <div class="quarto-navbar-tools">
@@ -130,57 +115,22 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#geospatialdata-on-the-r-drive" id="toc-geospatialdata-on-the-r-drive" class="nav-link active" data-scroll-target="#geospatialdata-on-the-r-drive">🗺️ GeoSpatialData on the R Drive</a></li>
-  <li><a href="#geolink-functions-for-r" id="toc-geolink-functions-for-r" class="nav-link" data-scroll-target="#geolink-functions-for-r">GeoLink functions for R:</a></li>
+  <li><a href="#mit-license" id="toc-mit-license" class="nav-link active" data-scroll-target="#mit-license">MIT License</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">GeoSpatialData folder on the R Drive</h1>
-</div>
 
 
 
-<div class="quarto-title-meta">
-
-    
-  
-    
-  </div>
-  
-
-
-</header>
-
-
-<section id="geospatialdata-on-the-r-drive" class="level1">
-<h1>🗺️ GeoSpatialData on the R Drive</h1>
-<p>The <code>GeoSpatialData</code> folder on the R: drive is a centralized collection of raster, vector, and gridded spatial datasets used in many of NINA’s GIS workflows. It includes base layers such as:</p>
-<ul>
-<li>Land cover and vegetation maps</li>
-<li>Elevation models (DEM)</li>
-<li>Hydrology and slope layers</li>
-<li>Municipality boundaries and grids (e.g., SSB grids)</li>
-<li>Gridded climate data</li>
-</ul>
-<p>There is a data inventory Excel spreadsheet at <code>R:\GeoSpatialData\Data\_Inventory.xlsx</code> where you can find the most current overview of the data available on the R drive. Data is generally grouped into broad categories such as AdministrativeUnits, Elevation, Hydrography, Landcover, StatisticalUnits, Topography, etc.</p>
-<p>Within each subfolder of a category, you can expect to see five subfolders:</p>
-<ol type="1">
-<li>Converted</li>
-<li>Original</li>
-<li>Processed</li>
-<li>Scripts</li>
-<li>Shared</li>
-</ol>
-<p>Original (raw) data is in the Original subfolder and is what most people generally work with. The Converted subfolder is usually empty, but some may contain data, e.g.&nbsp;Norway_AdministrativeUnits in AdministrativeUnits. Many of the datasets will have files in the Processed folder. This may include data converted from one type to another, data clipped or subset to a specific region, changes in projections (CRS), etc. The Scripts subfolder will contain the relevant scripts used to process or convert data, e.g.&nbsp;from SOSI to shp. The purpose of the Shared subfolder is unknown.</p>
-<p>GeoLink contains a pair of helper functions to find and import data from the GeoSpatialData folder on the R drive. Note that these only work when working from the [NINA RStudio server] (https://rstudio.nina.no).</p>
-</section>
-<section id="geolink-functions-for-r" class="level1">
-<h1>GeoLink functions for R:</h1>
+<section id="mit-license" class="level1">
+<h1>MIT License</h1>
+<p>Copyright (c) 2025 Jenny Hansen</p>
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p>
+<p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p>
+<p>THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
 
 
 </section>
