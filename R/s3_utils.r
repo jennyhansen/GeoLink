@@ -68,17 +68,20 @@ read_from_s3 <- function(s3_path,
 #' Upload a spatial dataset (vector or raster) to an S3 bucket using a single-file format.
 #'
 #' @details
-#' Note that shapefiles (`.shp`) and file geodatabases (`.gdb`) are not supported for upload.
+#' This function supports writing to `.gpkg` (GeoPackage), `.parquet` (GeoParquet), and raster formats like `.tif`.
+#' 
+#' Note that shapefiles (`.shp`) and file geodatabases (`.gdb`) are not supported. 
 #' Shapefiles consist of multiple companion files (e.g., `.shp`, `.shx`, `.dbf`) that cannot be
-#' reliably stored or reconstructed as standalone objects in S3. Similarly, `.gdb` is a folder-based 
+#' reliably stored or reconstructed as individual S3 objects. Likewise, `.gdb` is a folder-based 
 #' format that cannot be uploaded as a single file.
 #'
-#' Please use `.gpkg`, `.parquet`, or `.tif` formats for compatibility with S3.
+#' The `layer` argument is only relevant when writing to `.gpkg` and specifies the internal layer name. 
+#' It must be provided for `.gpkg` but is ignored for other formats.
 #'
 #' @param obj An `sf` or `SpatRaster` object.
 #' @param bucket Character. Name of the S3 bucket (e.g., `"geolink-test"`).
 #' @param key Character. Path (including filename) within the S3 bucket to write to.
-#' @param layer Character. Optional layer name when writing to a GPKG file. Required if using `.gpkg`.
+#' @param layer Character. Required when writing to a `.gpkg` file. Ignored for other formats.
 #' @param endpoint Character. The S3-compatible endpoint. Default is NINA’s internal `"s3-int-1.nina.no"`.
 #' @param use_https Logical. Whether to use HTTPS (default `TRUE`).
 #' @param virtual Logical. Use virtual-hosted-style URLs (default `FALSE`).
@@ -88,11 +91,6 @@ read_from_s3 <- function(s3_path,
 #' @export
 #'
 #' @examples
-#' # These examples demonstrate how to write spatial data to S3.
-#' # They will not run automatically — copy and paste them into the console
-#' # after loading `oppdal` (or the `sf` object of your choice) or `myr` (a raster object),
-#' # and ensure your AWS credentials and endpoint access are configured.
-#'
 #' \dontrun{
 #' # Upload an sf object as a GeoPackage (requires layer name)
 #' write_to_s3(oppdal, "geolink-test", "admin/Oppdal_municipality.gpkg", layer = "Oppdal")
@@ -100,8 +98,8 @@ read_from_s3 <- function(s3_path,
 #' # Upload an sf object as GeoParquet
 #' write_to_s3(oppdal, "geolink-test", "admin/Oppdal_municipality.parquet")
 #'
-#' # Upload a SpatRaster object as a GeoTIFF
-#' write_to_s3(myr, "geolink-test", "raster/my_raster_output.tif")
+#' # Upload a raster object
+#' write_to_s3(myr, "geolink-test", "raster/myr_surface.tif")
 #' }
 write_to_s3 <- function(obj, bucket, key,
                         layer = NULL,
