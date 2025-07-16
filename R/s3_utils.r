@@ -88,6 +88,11 @@ read_from_s3 <- function(s3_path,
 #' @export
 #'
 #' @examples
+#' # These examples demonstrate how to write spatial data to S3.
+#' # They will not run automatically — copy and paste them into the console
+#' # after loading `oppdal` (or the `sf` object of your choice), and ensure
+#' # your AWS credentials and endpoint access are configured.
+#'
 #' \dontrun{
 #' # Upload an sf object as a GeoPackage (requires layer name)
 #' write_to_s3(oppdal, "geolink-test", "admin/Oppdal_municipality.gpkg", layer = "Oppdal")
