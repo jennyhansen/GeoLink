@@ -20,3 +20,16 @@ A character vector of full paths, sorted with folders first.
 \description{
 Lists the contents of a specified folder within \verb{/data/R/GeoSpatialData} on NINA’s network.
 }
+\examples{
+# List all files and folders in the top-level GeoSpatialData directory
+list_from_rgsd()
+
+# List only folders under the Topography category
+list_from_rgsd("Topography", type = "folder")
+
+# List only files in a specific catchment subdirectory
+list_from_rgsd("Hydrography/Norway_Catchments/Original", type = "file")
+
+# Use a full path to a Land Cover folder
+list_from_rgsd("/data/R/GeoSpatialData/LandCover/Europe/Copernicus_HighResolutionLayers/Original", type = "both")
+}

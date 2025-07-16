@@ -79,7 +79,7 @@ list_from_rgsd <- function(folder = "/data/R/GeoSpatialData",
 #' 
 #' @examples
 #' # Load a GeoTIFF (raster)
-#' elev <- import_from_rgsd("Elevation/Fenoscandia_DEM_10/Original/dem_10m_fenoscandia.tif")
+#' elev <- import_from_rgsd("Elevation/Fenoscandia_DEM_10m/Original/dem_10m_fenoscandia.tif")
 #'
 #' # Load a shapefile (vector)
 #' huts <- import_from_rgsd("Buildings/Norway_FKB_Buildings/Processed/N50_TouristCabins/Norway_TouristCabins_ETRS89_UTM_zone_33N.shp")

@@ -17,3 +17,15 @@ An \code{sf} object or a \code{SpatRaster}, depending on input type.
 \description{
 Loads vector or raster data using appropriate methods from \code{sf}, \code{terra}, or \code{sfarrow}.
 }
+\examples{
+# Load a GeoTIFF (raster)
+elev <- import_from_rgsd("Elevation/Fenoscandia_DEM_10m/Original/dem_10m_fenoscandia.tif")
+
+# Load a shapefile (vector)
+huts <- import_from_rgsd("Buildings/Norway_FKB_Buildings/Processed/N50_TouristCabins/Norway_TouristCabins_ETRS89_UTM_zone_33N.shp")
+
+# Load from a full absolute path
+# alt <- import_from_rgsd("/data/R/GeoSpatialData/Natur/N50/N50_NatureTypes.shp")
+
+# NOTE: GeoPackage and GeoParquet files are not yet consistently supported in this directory
+}
