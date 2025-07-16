@@ -7,6 +7,19 @@
 #'
 #' @return A character vector of full paths, sorted with folders first.
 #' @export
+#' 
+#' @examples
+#' # List all files and folders in the top-level GeoSpatialData directory
+#' list_from_rgsd()
+#'
+#' # List only folders under the Topography category
+#' list_from_rgsd("Topography", type = "folder")
+#'
+#' # List only files in a specific catchment subdirectory
+#' list_from_rgsd("Hydrography/Norway_Catchments/Original", type = "file")
+#'
+#' # Use a full path to a Land Cover folder
+#' list_from_rgsd("/data/R/GeoSpatialData/LandCover/Europe/Copernicus_HighResolutionLayers/Original", type = "both")
 list_from_rgsd <- function(folder = "/data/R/GeoSpatialData", 
                            type = c("both", "file", "folder")) {
   type <- match.arg(type)
@@ -63,6 +76,18 @@ list_from_rgsd <- function(folder = "/data/R/GeoSpatialData",
 #'
 #' @return An `sf` object or a `SpatRaster`, depending on input type.
 #' @export
+#' 
+#' @examples
+#' # Load a GeoTIFF (raster)
+#' elev <- import_from_rgsd("Elevation/Fenoscandia_DEM_10/Original/dem_10m_fenoscandia.tif")
+#'
+#' # Load a shapefile (vector)
+#' huts <- import_from_rgsd("Buildings/Norway_FKB_Buildings/Processed/N50_TouristCabins/Norway_TouristCabins_ETRS89_UTM_zone_33N.shp")
+#'
+#' # Load from a full absolute path
+#' # alt <- import_from_rgsd("/data/R/GeoSpatialData/Natur/N50/N50_NatureTypes.shp")
+#'
+#' # NOTE: GeoPackage and GeoParquet files are not yet consistently supported in this directory
 import_from_rgsd <- function(name, layer = NULL) {
   host <- try(system("hostname", intern = TRUE), silent = TRUE)
   if (inherits(host, "try-error") || !grepl("ninrstudio|ningis|lipgis|liprstudio", host)) {
