@@ -1,0 +1,20 @@
+# Quarto rendered output (exclude from language stats)
+docs/** linguist-vendored
+_site/** linguist-vendored
+
+# Optional: Quarto source files (exclude if large or auto-generated)
+index.qmd linguist-documentation
+reference.qmd linguist-documentation
+GeoLink.qmd linguist-documentation
+
+# Optional: Development folders not part of package code
+articles/** linguist-vendored
+scripts/** linguist-vendored
+vector/** linguist-vendored
+
+# Optional: Don’t count LICENSE in language stats
+LICENSE.md linguist-generated
+
+# Optional: Don’t count RStudio project metadata
+*.Rproj linguist-generated
+.Rproj.user/** linguist-generated
