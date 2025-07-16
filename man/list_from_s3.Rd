@@ -15,23 +15,34 @@ list_from_s3(
 )
 }
 \arguments{
-\item{bucket}{The S3 bucket name}
+\item{bucket}{Character. The name of the S3 bucket (e.g., \code{"geolink-test"}).}
 
-\item{prefix}{Optional prefix to filter files (e.g. "data/")}
+\item{prefix}{Character (optional). Filter by key prefix (e.g., \code{"grunnkart/"} to return only files in that folder).}
 
-\item{file_type}{Optional file extension to filter by (e.g. ".parquet", ".gpkg", ".tif", ".txt"). Default is NULL (no filtering).}
+\item{file_type}{Character (optional). File extension filter (e.g., \code{".parquet"}, \code{".gpkg"}). Default is \code{NULL} (no filtering).}
 
-\item{endpoint}{The S3 endpoint (default is NINA's internal S3)}
+\item{endpoint}{Character. S3 endpoint URL. Default is \code{"s3-int-1.nina.no"} (NINA internal).}
 
-\item{use_https}{Logical, use HTTPS for the connection (default TRUE)}
+\item{use_https}{Logical. Whether to use HTTPS protocol (default \code{TRUE}).}
 
-\item{virtual}{Logical, use virtual-hosted-style URLs (default FALSE)}
+\item{virtual}{Logical. Use virtual-hosted-style URLs (default \code{FALSE}).}
 
-\item{full_info}{Logical, return a data.frame with metadata (default TRUE)}
+\item{full_info}{Logical. If \code{TRUE}, returns a \code{data.frame} with metadata. If \code{FALSE}, returns a vector of keys only.}
 }
 \value{
-A character vector of file keys (or a data.frame if \code{full_info = TRUE})
+A character vector or a \code{data.frame}, depending on \code{full_info}.
 }
 \description{
-List files in an S3 bucket (optionally filtered by file type)
+Lists the contents of an S3 bucket, optionally filtering by path prefix and/or file extension.
+This function is configured for NINA’s internal S3.
+}
+\examples{
+# List all files in the test bucket
+list_from_s3("geolink-test")
+
+# List only .parquet files under the 'admin/' subfolder
+list_from_s3("geolink-test", prefix = "admin/", file_type = ".parquet")
+
+# List all files in 'grunnkart/' but return just the keys (not metadata)
+list_from_s3("geolink-test", prefix = "grunnkart/", full_info = FALSE)
 }
