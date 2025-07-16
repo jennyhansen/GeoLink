@@ -134,16 +134,29 @@ write_to_s3 <- function(data,
 
 #' List files in an S3 bucket (optionally filtered by file type)
 #'
-#' @param bucket The S3 bucket name
-#' @param prefix Optional prefix to filter files (e.g. "data/")
-#' @param file_type Optional file extension to filter by (e.g. ".parquet", ".gpkg", ".tif", ".txt"). Default is NULL (no filtering).
-#' @param endpoint The S3 endpoint (default is NINA's internal S3)
-#' @param use_https Logical, use HTTPS for the connection (default TRUE)
-#' @param virtual Logical, use virtual-hosted-style URLs (default FALSE)
-#' @param full_info Logical, return a data.frame with metadata (default TRUE)
+#' Lists the contents of an S3 bucket, optionally filtering by path prefix and/or file extension.
+#' This function is configured for NINA’s internal S3.
 #'
-#' @return A character vector of file keys (or a data.frame if `full_info = TRUE`)
+#' @param bucket Character. The name of the S3 bucket (e.g., `"geolink-test"`).
+#' @param prefix Character (optional). Filter by key prefix (e.g., `"grunnkart/"` to return only files in that folder).
+#' @param file_type Character (optional). File extension filter (e.g., `".parquet"`, `".gpkg"`). Default is `NULL` (no filtering).
+#' @param endpoint Character. S3 endpoint URL. Default is `"s3-int-1.nina.no"` (NINA internal).
+#' @param use_https Logical. Whether to use HTTPS protocol (default `TRUE`).
+#' @param virtual Logical. Use virtual-hosted-style URLs (default `FALSE`).
+#' @param full_info Logical. If `TRUE`, returns a `data.frame` with metadata. If `FALSE`, returns a vector of keys only.
+#'
+#' @return A character vector or a `data.frame`, depending on `full_info`.
 #' @export
+#'
+#' @examples
+#' # List all files in the test bucket
+#' list_from_s3("geolink-test")
+#'
+#' # List only .parquet files under the 'admin/' subfolder
+#' list_from_s3("geolink-test", prefix = "admin/", file_type = ".parquet")
+#'
+#' # List all files in 'grunnkart/' but return just the keys (not metadata)
+#' list_from_s3("geolink-test", prefix = "grunnkart/", full_info = FALSE)
 list_from_s3 <- function(bucket,
                          prefix = NULL,
                          file_type = NULL,
