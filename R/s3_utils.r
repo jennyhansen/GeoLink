@@ -62,75 +62,79 @@ read_from_s3 <- function(s3_path,
   })
 }
 
-#' Write spatial or raster data to S3
+#' Write spatial data to an S3 bucket
 #'
-#' Supports writing `.parquet` (default for sf), `.gpkg`, and `.tif` (for raster).
+#' @description
+#' Upload a spatial dataset (vector or raster) to an S3 bucket using a single-file format.
 #'
-#' @param data An `sf` object or `SpatRaster`
-#' @param bucket The S3 bucket name
-#' @param object_key The object key (e.g. "folder/filename.tif")
-#' @param file_type Optional. File extension (".parquet", ".gpkg", ".tif"). If NULL, inferred from object_key.
-#' @param endpoint The S3 endpoint (default is NINA's internal S3)
-#' @param use_https Use HTTPS (default TRUE)
-#' @param virtual Use virtual-hosted-style URLs (default FALSE)
-#' @param ... Additional arguments passed to the writing function
+#' @details
+#' Note that shapefiles (`.shp`) and file geodatabases (`.gdb`) are not supported for upload.
+#' Shapefiles consist of multiple companion files (e.g., `.shp`, `.shx`, `.dbf`) that cannot be
+#' reliably stored or reconstructed as standalone objects in S3. Similarly, `.gdb` is a folder-based 
+#' format that cannot be uploaded as a single file.
 #'
-#' @return TRUE if upload succeeds
+#' Please use `.gpkg`, `.parquet`, or `.tif` formats for compatibility with S3.
+#'
+#' @param obj An `sf` or `SpatRaster` object.
+#' @param bucket Character. Name of the S3 bucket (e.g., `"geolink-test"`).
+#' @param key Character. Path (including filename) within the S3 bucket to write to.
+#' @param layer Character. Optional layer name when writing to a GPKG file. Required if using `.gpkg`.
+#' @param endpoint Character. The S3-compatible endpoint. Default is NINA’s internal `"s3-int-1.nina.no"`.
+#' @param use_https Logical. Whether to use HTTPS (default `TRUE`).
+#' @param virtual Logical. Use virtual-hosted-style URLs (default `FALSE`).
+#' @param ... Additional arguments passed to `st_write()`, `st_write_parquet()`, or `writeRaster()`.
+#'
+#' @return Logical. `TRUE` if upload was successful.
 #' @export
-write_to_s3 <- function(data,
-                        bucket,
-                        object_key,
-                        file_type = NULL,
+#'
+#' @examples
+#' \dontrun{
+#' # Upload an sf object as a GeoPackage (requires layer name)
+#' write_to_s3(oppdal, "geolink-test", "admin/Oppdal_municipality.gpkg", layer = "Oppdal")
+#'
+#' # Upload as GeoParquet
+#' write_to_s3(oppdal, "geolink-test", "admin/Oppdal_municipality.parquet")
+#' }
+write_to_s3 <- function(obj, bucket, key,
+                        layer = NULL,
                         endpoint = "s3-int-1.nina.no",
                         use_https = TRUE,
-                        virtual = FALSE,
-                        ...) {
-  tryCatch({
-    # Auto-detect file type from object_key if not given
-    if (is.null(file_type)) {
-      ext <- tools::file_ext(object_key)
-      if (ext == "") stop("Cannot infer file type from object_key.")
-      file_type <- paste0(".", tolower(ext))
-    }
-    
-    # Create temp file
-    tmp <- tempfile(fileext = file_type)
-    on.exit(unlink(tmp), add = TRUE)
-    
-    # Dispatch based on file type and object class
-    if (file_type == ".parquet") {
-      if (!inherits(data, "sf")) stop("Must be `sf` data format to write .parquet")
-      sfarrow::st_write_parquet(data, dsn = tmp, ...)
-    } else if (file_type == ".gpkg") {
-      if (!inherits(data, "sf")) stop("Must be `sf` data format to write .gpkg")
-      sf::st_write(data, dsn = tmp, quiet = TRUE, ...)
-    } else if (file_type == ".tif") {
-      if (!inherits(data, "SpatRaster")) stop("Must be a `SpatRaster` to write .tif")
-      terra::writeRaster(data, filename = tmp, overwrite = TRUE, ...)
+                        virtual = FALSE, ...) {
+  ext <- tolower(tools::file_ext(key))
+  tmp <- tempfile(fileext = paste0(".", ext))
+  on.exit(unlink(tmp), add = TRUE)
+  
+  if (inherits(obj, "sf")) {
+    if (ext == "gpkg") {
+      if (is.null(layer)) stop("You must specify `layer` when writing to a GPKG.")
+      sf::st_write(obj, tmp, layer = layer, driver = "GPKG", quiet = TRUE, ...)
+    } else if (ext == "parquet") {
+      if (!requireNamespace("sfarrow", quietly = TRUE)) stop("Package 'sfarrow' is required for writing parquet.")
+      sfarrow::st_write_parquet(obj, tmp, ...)
     } else {
-      stop("Unsupported file type. Only .parquet, .gpkg, and .tif are supported.")
+      stop("Unsupported vector file type: ", ext)
     }
-    
-    # Upload to S3
-    result <- aws.s3::put_object(
-      file = tmp,
-      object = object_key,
-      bucket = bucket,
-      base_url = endpoint,
-      use_https = use_https,
-      region = "",
-      virtual = virtual,
-      multipart = TRUE,
-      ...
-    )
-    
-    if (!isTRUE(result)) stop("Upload failed.")
-    return(TRUE)
-  },
-  error = function(e) {
-    stop(paste("Failed to write to S3:", e$message))
-  })
+  } else if (inherits(obj, "SpatRaster")) {
+    if (!requireNamespace("terra", quietly = TRUE)) stop("Package 'terra' is required for writing raster.")
+    terra::writeRaster(obj, tmp, ...)
+  } else {
+    stop("Unsupported object type: must be `sf` or `SpatRaster`.")
+  }
+  
+  if (!requireNamespace("aws.s3", quietly = TRUE)) stop("The 'aws.s3' package is required for S3 upload.")
+  success <- aws.s3::put_object(
+    file = tmp,
+    object = key,
+    bucket = bucket,
+    base_url = endpoint,
+    use_https = use_https,
+    region = "",
+    virtual = virtual
+  )
+  
+  return(success)
 }
+
 
 #' List files in an S3 bucket (optionally filtered by file type)
 #'
