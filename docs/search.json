@@ -7,32 +7,11 @@
     "text": "This page will list exported functions from the GeoLink package."
   },
   {
-    "objectID": "articles/index.html",
-    "href": "articles/index.html",
-    "title": "Articles",
+    "objectID": "articles/functions.html",
+    "href": "articles/functions.html",
+    "title": "Functions",
     "section": "",
-    "text": "This page will contain longer documentation, vignettes, or use-case tutorials."
-  },
-  {
-    "objectID": "articles/data_geospatialdata.html",
-    "href": "articles/data_geospatialdata.html",
-    "title": "GeoSpatialData folder on the R Drive",
-    "section": "",
-    "text": "🗺️ GeoSpatialData on the R Drive\nThe GeoSpatialData folder on the R: drive is a centralized collection of raster, vector, and gridded spatial datasets used in many of NINA’s GIS workflows. It includes base layers such as:\n\nLand cover and vegetation maps\nElevation models (DEM)\nHydrology and slope layers\nMunicipality boundaries and grids (e.g., SSB grids)\nGridded climate data\n\nThere is a data inventory Excel spreadsheet at R:\\GeoSpatialData\\Data\\_Inventory.xlsx where you can find the most current overview of the data available on the R drive. Data is generally grouped into broad categories such as AdministrativeUnits, Elevation, Hydrography, Landcover, StatisticalUnits, Topography, etc.\nWithin each subfolder of a category, you can expect to see five subfolders:\n\nConverted\nOriginal\nProcessed\nScripts\nShared\n\nOriginal (raw) data is in the Original subfolder and is what most people generally work with. The Converted subfolder is usually empty, but some may contain data, e.g. Norway_AdministrativeUnits in AdministrativeUnits. Many of the datasets will have files in the Processed folder. This may include data converted from one type to another, data clipped or subset to a specific region, changes in projections (CRS), etc. The Scripts subfolder will contain the relevant scripts used to process or convert data, e.g. from SOSI to shp. The purpose of the Shared subfolder is unknown.\nGeoLink contains a pair of helper functions to find and import data from the GeoSpatialData folder on the R drive. Note that these only work when working from the [NINA RStudio server] (https://rstudio.nina.no) or the GIS server (accessed through Omnissa Horizon Client.\n\n\nGeoLink functions for R:"
-  },
-  {
-    "objectID": "GeoLink.html",
-    "href": "GeoLink.html",
-    "title": "Welcome to GeoLink",
-    "section": "",
-    "text": "This is the landing page for the GeoLink package website."
-  },
-  {
-    "objectID": "LICENSE.html",
-    "href": "LICENSE.html",
-    "title": "MIT License",
-    "section": "",
-    "text": "MIT License\nCopyright (c) 2025 Jenny Hansen\nPermission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:\nThe above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.\nTHE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE."
+    "text": "Functions\nThis page describes the functions available in the GeoLink project."
   },
   {
     "objectID": "articles/geodata_sources.html",
@@ -47,6 +26,34 @@
     "title": "Geospatial Data Sources",
     "section": "🗂️ Overview of Data Sources",
     "text": "🗂️ Overview of Data Sources\n\n\n\nSource\nDescription\nLink to details\n\n\n\n\nGeoSpatialData\nCentral folder on the R drive with raster, vector, and grid data\nGeoSpatialData on R Drive\n\n\nGRASS GIS\nGRASS-based spatial database used for modeling and processing workflows\nGRASS GIS Environment\n\n\nGIS Database\nPostgreSQL/PostGIS database containing processed data ready for modeling\nPostgreSQL GIS Database"
+  },
+  {
+    "objectID": "LICENSE.html",
+    "href": "LICENSE.html",
+    "title": "MIT License",
+    "section": "",
+    "text": "MIT License\nCopyright (c) 2025 Jenny Hansen\nPermission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:\nThe above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.\nTHE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE."
+  },
+  {
+    "objectID": "GeoLink.html",
+    "href": "GeoLink.html",
+    "title": "Welcome to GeoLink",
+    "section": "",
+    "text": "This is the landing page for the GeoLink package website."
+  },
+  {
+    "objectID": "articles/data_geospatialdata.html",
+    "href": "articles/data_geospatialdata.html",
+    "title": "GeoSpatialData folder on the R Drive",
+    "section": "",
+    "text": "🗺️ GeoSpatialData on the R Drive\nThe GeoSpatialData folder on the R: drive is a centralized collection of raster, vector, and gridded spatial datasets used in many of NINA’s GIS workflows. It includes base layers such as:\n\nLand cover and vegetation maps\nElevation models (DEM)\nHydrology and slope layers\nMunicipality boundaries and grids (e.g., SSB grids)\nGridded climate data\n\nThere is a data inventory Excel spreadsheet at R:\\GeoSpatialData\\Data\\_Inventory.xlsx where you can find the most current overview of the data available on the R drive. Data is generally grouped into broad categories such as AdministrativeUnits, Elevation, Hydrography, Landcover, StatisticalUnits, Topography, etc.\nWithin each subfolder of a category, you can expect to see five subfolders:\n\nConverted\nOriginal\nProcessed\nScripts\nShared\n\nOriginal (raw) data is in the Original subfolder and is what most people generally work with. The Converted subfolder is usually empty, but some may contain data, e.g. Norway_AdministrativeUnits in AdministrativeUnits. Many of the datasets will have files in the Processed folder. This may include data converted from one type to another, data clipped or subset to a specific region, changes in projections (CRS), etc. The Scripts subfolder will contain the relevant scripts used to process or convert data, e.g. from SOSI to shp. The purpose of the Shared subfolder is unknown.\nGeoLink contains a pair of helper functions to find and import data from the GeoSpatialData folder on the R drive. Note that these only work when working from the [NINA RStudio server] (https://rstudio.nina.no) or the GIS server (accessed through Omnissa Horizon Client.\n\n\nGeoLink functions for R:"
+  },
+  {
+    "objectID": "articles/index.html",
+    "href": "articles/index.html",
+    "title": "Articles",
+    "section": "",
+    "text": "This page will contain longer documentation, vignettes, or use-case tutorials."
   },
   {
     "objectID": "index.html",

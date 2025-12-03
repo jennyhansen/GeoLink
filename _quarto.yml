@@ -21,6 +21,11 @@ website:
             text: GRASS GIS
           - href: articles/data_gisdb.qmd
             text: PostgreSQL GIS Database
+          
+      - text: Functions
+        menu:
+          - href: articles/functions.qmd
+            text: Overview
 
 format:
   html:

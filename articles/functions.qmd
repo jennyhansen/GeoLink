@@ -1,0 +1,8 @@
+---
+title: "Functions"
+format: html
+---
+
+# Functions
+
+This page describes the functions available in the GeoLink project.
