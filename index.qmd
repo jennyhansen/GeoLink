@@ -3,4 +3,37 @@ title: "Welcome to GeoLink"
 format: html
 ---
 
-This is the landing page for the GeoLink package website.
+GeoLink is a new initiative at NINA designed to make it easier for 
+researchers and engineers to access, understand, and use the organisation’s 
+geospatial data. Over decades, NINA has accumulated extensive datasets on 
+species, climate, land use, ecosystems, and human activity—resources that are 
+central to our research and activities. However, much of this data is scattered 
+across different repositories, poorly catalogued, and often difficult for 
+non-experts to import into their workflows. As a result, NINA employees spend 
+too much time searching for, re-downloading, or re-processing data that 
+already exists. GeoLink aims to reduce these barriers by creating a shared 
+overview of environmental geospatial datasets and developing practical tools 
+that make the data easy to find and use.
+
+The project focuses on two main areas: improving data visibility and building 
+user-friendly tools. First, GeoLink will compile an updated, researcher-driven 
+inventory of the most relevant geospatial datasets hosted at NINA. This will be
+prioritized for national-scale environmental data frequently used in ecological 
+modelling and land-use planning. In parallel, will be the development of 
+functions that allow users to import “analysis-ready” geospatial data directly 
+into their workflow without needing advanced technical skills. This includes 
+exploring storage solutions, ensuring interoperability, and laying the 
+groundwork for long-term alignment with Miljødata.
+
+By improving access to shared data, GeoLink supports more efficient research, 
+reduces duplicated effort, and strengthens collaboration across departments. 
+Easier access to geospatial resources will help new staff get up to speed faster, 
+lower the technical threshold for working with spatial data, and reduce 
+pressure on NINA’s IT infrastructure. Ultimately, the project will provide a 
+strategy for accessing and working with geospatial data as our organization 
+continues to grow.
+
+  Use the nevigation bar on the top to view the various data souurces and 
+  explore functions and how-to vignettes.
+
+
