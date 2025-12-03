@@ -2,13 +2,13 @@
 % Please edit documentation in R/s3_utils.r
 \name{write_to_s3}
 \alias{write_to_s3}
-\title{Write spatial or raster data to S3}
+\title{Write spatial data to an S3 bucket}
 \usage{
 write_to_s3(
-  data,
+  obj,
   bucket,
-  object_key,
-  file_type = NULL,
+  key,
+  layer = NULL,
   endpoint = "s3-int-1.nina.no",
   use_https = TRUE,
   virtual = FALSE,
@@ -16,25 +16,48 @@ write_to_s3(
 )
 }
 \arguments{
-\item{data}{An \code{sf} object or \code{SpatRaster}}
+\item{obj}{An \code{sf} or \code{SpatRaster} object.}
 
-\item{bucket}{The S3 bucket name}
+\item{bucket}{Character. Name of the S3 bucket (e.g., \code{"geolink-test"}).}
 
-\item{object_key}{The object key (e.g. "folder/filename.tif")}
+\item{key}{Character. Path (including filename) within the S3 bucket to write to.}
 
-\item{file_type}{Optional. File extension (".parquet", ".gpkg", ".tif"). If NULL, inferred from object_key.}
+\item{layer}{Character. Required when writing to a \code{.gpkg} file. Ignored for other formats.}
 
-\item{endpoint}{The S3 endpoint (default is NINA's internal S3)}
+\item{endpoint}{Character. The S3-compatible endpoint. Default is NINA’s internal \code{"s3-int-1.nina.no"}.}
 
-\item{use_https}{Use HTTPS (default TRUE)}
+\item{use_https}{Logical. Whether to use HTTPS (default \code{TRUE}).}
 
-\item{virtual}{Use virtual-hosted-style URLs (default FALSE)}
+\item{virtual}{Logical. Use virtual-hosted-style URLs (default \code{FALSE}).}
 
-\item{...}{Additional arguments passed to the writing function}
+\item{...}{Additional arguments passed to \code{st_write()}, \code{st_write_parquet()}, or \code{writeRaster()}.}
 }
 \value{
-TRUE if upload succeeds
+Logical. \code{TRUE} if upload was successful.
 }
 \description{
-Supports writing \code{.parquet} (default for sf), \code{.gpkg}, and \code{.tif} (for raster).
+Upload a spatial dataset (vector or raster) to an S3 bucket using a single-file format.
+}
+\details{
+This function supports writing to \code{.gpkg} (GeoPackage), \code{.parquet} (GeoParquet), and raster formats like \code{.tif}.
+
+Note that shapefiles (\code{.shp}) and file geodatabases (\code{.gdb}) are not supported.
+Shapefiles consist of multiple companion files (e.g., \code{.shp}, \code{.shx}, \code{.dbf}) that cannot be
+reliably stored or reconstructed as individual S3 objects. Likewise, \code{.gdb} is a folder-based
+format that cannot be uploaded as a single file.
+
+The \code{layer} argument is only relevant when writing to \code{.gpkg} and specifies the internal layer name.
+It must be provided for \code{.gpkg} but is ignored for other formats.
+}
+\examples{
+\dontrun{
+# Upload an sf object as a GeoPackage (requires layer name)
+write_to_s3(oppdal, "geolink-test", "admin/Oppdal_municipality.gpkg", layer = "Oppdal")
+
+# Upload an sf object as GeoParquet
+write_to_s3(oppdal, "geolink-test", "admin/Oppdal_municipality.parquet")
+
+# Upload a raster object
+write_to_s3(myr, "geolink-test", "raster/myr_surface.tif")
+}
 }
