@@ -27,7 +27,7 @@ website:
           - href: articles/functions.qmd
             text: Overview
           - href: articles/functions_geospatialdata.qmd
-            text: R:\GeoSpatialData
+            text: R:GeoSpatialData
 
 format:
   html:
