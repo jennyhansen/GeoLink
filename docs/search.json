@@ -7,29 +7,29 @@
     "text": "This page will list exported functions from the GeoLink package."
   },
   {
-    "objectID": "articles/functions_S3.html",
-    "href": "articles/functions_S3.html",
+    "objectID": "articles/functions_s3.html",
+    "href": "articles/functions_s3.html",
     "title": "Functions for S3 buckets",
     "section": "",
     "text": "read_from_s3() loads spatial data directly from an S3 bucket and returns it as either an sf object (for vector data) or a SpatRaster (for raster data). The function detects the file format automatically from the file extension unless you specify it manually.\nThe function supports: - GeoParquet (.parquet) — read directly via Arrow + sfarrow\n- GeoPackage (.gpkg) — downloaded temporarily, then read with sf\n- GeoTIFF (.tif) — downloaded temporarily, then read with terra\nInternally, the function handles all S3 communication, temporary files, and format-specific reading. This means you can load S3-based spatial data with a single line of code, without worrying about URLs, credentials, or file formats.\nThis function is useful when: - you store datasets in buckets instead of local directories\n- you work with mixed formats (e.g., raster + vector)\n- you need a consistent interface for reading data from internal S3\n- you prefer lightweight, single-file spatial formats such as Parquet, GPKG, and GeoTIFF"
   },
   {
-    "objectID": "articles/functions_S3.html#read_from_s3",
-    "href": "articles/functions_S3.html#read_from_s3",
+    "objectID": "articles/functions_s3.html#read_from_s3",
+    "href": "articles/functions_s3.html#read_from_s3",
     "title": "Functions for S3 buckets",
     "section": "",
     "text": "read_from_s3() loads spatial data directly from an S3 bucket and returns it as either an sf object (for vector data) or a SpatRaster (for raster data). The function detects the file format automatically from the file extension unless you specify it manually.\nThe function supports: - GeoParquet (.parquet) — read directly via Arrow + sfarrow\n- GeoPackage (.gpkg) — downloaded temporarily, then read with sf\n- GeoTIFF (.tif) — downloaded temporarily, then read with terra\nInternally, the function handles all S3 communication, temporary files, and format-specific reading. This means you can load S3-based spatial data with a single line of code, without worrying about URLs, credentials, or file formats.\nThis function is useful when: - you store datasets in buckets instead of local directories\n- you work with mixed formats (e.g., raster + vector)\n- you need a consistent interface for reading data from internal S3\n- you prefer lightweight, single-file spatial formats such as Parquet, GPKG, and GeoTIFF"
   },
   {
-    "objectID": "articles/functions_S3.html#write_to_s3",
-    "href": "articles/functions_S3.html#write_to_s3",
+    "objectID": "articles/functions_s3.html#write_to_s3",
+    "href": "articles/functions_s3.html#write_to_s3",
     "title": "Functions for S3 buckets",
     "section": "write_to_s3()",
     "text": "write_to_s3()\nwrite_to_s3() uploads spatial data (vector or raster) to an S3 bucket.\nIt handles both the conversion to a single-file format and the upload to the bucket.\nSupported output formats include: - .gpkg (GeoPackage) — supports multiple internal layers\n- .parquet (GeoParquet) — lightweight and highly portable\n- .tif (GeoTIFF) — for raster data\nNot supported: - shapefiles (.shp), because they require multiple companion files\n- Esri File Geodatabases (.gdb), because they are folder-based formats\nVectors (sf) are written using either st_write() or sfarrow::st_write_parquet(), and rasters (SpatRaster) are written with terra::writeRaster().\nThe function then uploads the resulting file to S3 using aws.s3::put_object().\nThis function is especially helpful for: - storing analysis-ready datasets in shared internal buckets\n- pipeline automation where outputs need to be uploaded as part of processing\n- converting spatial formats to stable, single-file S3-friendly versions\n- ensuring that exported data is consistently written with a reproducible workflow"
   },
   {
-    "objectID": "articles/functions_S3.html#list_from_s3",
-    "href": "articles/functions_S3.html#list_from_s3",
+    "objectID": "articles/functions_s3.html#list_from_s3",
+    "href": "articles/functions_s3.html#list_from_s3",
     "title": "Functions for S3 buckets",
     "section": "list_from_s3()",
     "text": "list_from_s3()\nlist_from_s3() lists the files stored in an S3 bucket, with optional filtering by prefix (a folder-like path) or by file extension.\nIt returns either: - a vector of keys (file paths), or\n- a data frame with metadata (size, last modified time)\nYou can use prefix to list only the contents of a specific subfolder, such as:\nprefix = \"grunnkart/\"\nYou can also limit the results to a specific file type, such as:\nfile_type = \".parquet\"\nThis function is a practical way to: - explore datasets stored in S3 buckets\n- script reproducible workflows that need to know which files exist\n- automatically select resources or versions based on bucket contents\n- check for expected input/output files in bucket-based pipelines\nTogether, these three functions provide a streamlined way to browse, read, and write spatial datasets stored inside NINA’s internal S3 infrastructure."
