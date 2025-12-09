@@ -1,0 +1,78 @@
+---
+title: "Functions for data on R:\\GeoSpatialData"
+format: html
+editor: 
+  markdown: 
+    wrap: 72
+---
+
+## Functions for data on the GeoSpatialData folder
+
+## `list_from_rgsd()`
+
+`list_from_rgsd()` provides a simple way to explore the contents of NINA’s shared **GeoSpatialData** directory, located at `/data/R/GeoSpatialData` on NINA’s servers. The directory contains a large number of spatial datasets organized into thematic folders, and this function makes it easier to inspect what is available without opening the directory manually.
+
+You can supply either:
+- a **full absolute path**, such as `/data/R/GeoSpatialData/Topography/Norway_N50`, or  
+- a **relative subpath**, such as `"Topography"` or `"Hydrography/Norway_Catchments/Original"`.
+
+The function then returns a list of everything inside that folder. You can control what gets returned using the `type` argument:
+
+- `"folder"` – show only subdirectories  
+- `"file"` – show only files  
+- `"both"` – show everything (the default)
+
+The return value is a character vector of full paths. The results are sorted so that folders appear before files, and items are sorted alphabetically within each group. This makes it easier to scan through large data directories and find the datasets you need.
+
+This function is especially useful when:
+- you want to confirm the correct file path before calling `import_from_rgsd()`  
+- you need to explore an unfamiliar part of the GeoSpatialData directory  
+- you want to quickly check what versions, “Original/Processed” subfolders, or file formats are available  
+- you are scripting data access and need reproducible directory navigation
+
+
+## `import_from_rgsd()`
+
+`import_from_rgsd()` is a convenience function for loading spatial datasets directly from the **GeoSpatialData** directory. Instead of remembering which R package or function to use for each file type, this function automatically chooses the correct tool based on the file extension.
+
+You can provide either:
+- a **relative path** from `/data/R/GeoSpatialData`, or  
+- a **full absolute path** to a file or directory.
+
+The function then determines the file type and loads it using the appropriate approach:
+
+### Vector formats  
+Handled via **`sf`**:
+- Shapefiles (`.shp`)
+- GeoJSON files (`.geojson`)
+- GeoPackage files (`.gpkg`) – requires specifying a layer name  
+- File Geodatabases (`.gdb`) – requires specifying a layer name  
+- GeoParquet files (`.parquet`) (using `sfarrow`)
+
+### Raster formats  
+Handled via **`terra`**:
+- GeoTIFF (`.tif`, `.tiff`)
+- IMG, ASC, VRT
+- NetCDF (`.nc`)
+- Other raster formats supported by `terra`
+
+For multi-layer file types (GPKG, GDB), you must supply a `layer` argument so the function knows which dataset inside the container to load. If you are unsure which layers are available, you can inspect them with:
+
+```r
+sf::st_layers(path_to_file)
+```
+
+`import_from_rgsd()` returns:
+
+- an **`sf` object** when reading vector data  
+- a **`SpatRaster`** when reading raster data  
+
+This function is helpful when:
+
+- working with multiple formats across a project  
+- standardizing data access in shared scripts or pipelines  
+- avoiding mistakes caused by mixing `terra` and `sf` usage  
+- loading datasets from deeply nested directories  
+- writing reproducible code that does not depend on the working directory  
+
+Together, `list_from_rgsd()` and `import_from_rgsd()` streamline access to NINA’s shared spatial datasets and reduce the friction of navigating a large, diverse data archive.

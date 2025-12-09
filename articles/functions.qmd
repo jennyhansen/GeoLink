@@ -10,14 +10,14 @@ functions to make it easier to work with spatial data in your
 R workflows. 
 
 Functions are designed for each major platform that hosts
-spatial data at NINA. Those platforms are the R:\GeoSpatialData
+spatial data at NINA. Those platforms are the `R:\GeoSpatialData`
 folder, GRASS, the PostGIS database, and S3 buckets.
 
 Note that some platforms will have functions for both
 reading and writing data on the platform. Others are read only.
 
-It is not possible to write data onto the R:\GeoSpatialData
+It is not possible to write data onto the `R:\GeoSpatialData`
 folder or the PostGIS database. You can write data to a 
 GRASS mapset or to an S3 bucket.
 
-Individual pages will describe the functions in more detail.
+Individual pages will describe the functions in more detail. Use the navigation bar to select the platform of interest.
