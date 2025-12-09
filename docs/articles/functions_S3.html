@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>GeoLink</title>
+<title>GeoLink - Functions for S3 buckets</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -150,16 +150,83 @@ ul.task-list li input[type="checkbox"] {
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#read_from_s3" id="toc-read_from_s3" class="nav-link active" data-scroll-target="#read_from_s3"><code>read_from_s3()</code></a></li>
+  <li><a href="#write_to_s3" id="toc-write_to_s3" class="nav-link" data-scroll-target="#write_to_s3"><code>write_to_s3()</code></a></li>
+  <li><a href="#list_from_s3" id="toc-list_from_s3" class="nav-link" data-scroll-target="#list_from_s3"><code>list_from_s3()</code></a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Functions for S3 buckets</h1>
+</div>
 
 
 
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
 
 
+</header>
+
+
+<section id="read_from_s3" class="level2">
+<h2 class="anchored" data-anchor-id="read_from_s3"><code>read_from_s3()</code></h2>
+<p><code>read_from_s3()</code> loads spatial data directly from an S3 bucket and returns it as either an <code>sf</code> object (for vector data) or a <code>SpatRaster</code> (for raster data). The function detects the file format automatically from the file extension unless you specify it manually.</p>
+<p>The function supports: - <strong>GeoParquet (<code>.parquet</code>)</strong> — read directly via Arrow + sfarrow<br>
+- <strong>GeoPackage (<code>.gpkg</code>)</strong> — downloaded temporarily, then read with <code>sf</code><br>
+- <strong>GeoTIFF (<code>.tif</code>)</strong> — downloaded temporarily, then read with <code>terra</code></p>
+<p>Internally, the function handles all S3 communication, temporary files, and format-specific reading. This means you can load S3-based spatial data with a single line of code, without worrying about URLs, credentials, or file formats.</p>
+<p>This function is useful when: - you store datasets in buckets instead of local directories<br>
+- you work with mixed formats (e.g., raster + vector)<br>
+- you need a consistent interface for reading data from internal S3<br>
+- you prefer lightweight, single-file spatial formats such as Parquet, GPKG, and GeoTIFF</p>
+</section>
+<section id="write_to_s3" class="level2">
+<h2 class="anchored" data-anchor-id="write_to_s3"><code>write_to_s3()</code></h2>
+<p><code>write_to_s3()</code> uploads spatial data (vector or raster) to an S3 bucket.<br>
+It handles both the <em>conversion</em> to a single-file format and the <em>upload</em> to the bucket.</p>
+<p>Supported output formats include: - <strong><code>.gpkg</code> (GeoPackage)</strong> — supports multiple internal layers<br>
+- <strong><code>.parquet</code> (GeoParquet)</strong> — lightweight and highly portable<br>
+- <strong><code>.tif</code> (GeoTIFF)</strong> — for raster data</p>
+<p>Not supported: - <strong>shapefiles (<code>.shp</code>)</strong>, because they require multiple companion files<br>
+- <strong>Esri File Geodatabases (<code>.gdb</code>)</strong>, because they are folder-based formats</p>
+<p>Vectors (<code>sf</code>) are written using either <code>st_write()</code> or <code>sfarrow::st_write_parquet()</code>, and rasters (<code>SpatRaster</code>) are written with <code>terra::writeRaster()</code>.<br>
+The function then uploads the resulting file to S3 using <code>aws.s3::put_object()</code>.</p>
+<p>This function is especially helpful for: - storing analysis-ready datasets in shared internal buckets<br>
+- pipeline automation where outputs need to be uploaded as part of processing<br>
+- converting spatial formats to stable, single-file S3-friendly versions<br>
+- ensuring that exported data is consistently written with a reproducible workflow</p>
+</section>
+<section id="list_from_s3" class="level2">
+<h2 class="anchored" data-anchor-id="list_from_s3"><code>list_from_s3()</code></h2>
+<p><code>list_from_s3()</code> lists the files stored in an S3 bucket, with optional filtering by prefix (a folder-like path) or by file extension.<br>
+It returns either: - a <strong>vector of keys</strong> (file paths), or<br>
+- a <strong>data frame with metadata</strong> (size, last modified time)</p>
+<p>You can use <code>prefix</code> to list only the contents of a specific subfolder, such as:</p>
+<pre><code>prefix = "grunnkart/"</code></pre>
+<p>You can also limit the results to a specific file type, such as:</p>
+<pre><code>file_type = ".parquet"</code></pre>
+<p>This function is a practical way to: - explore datasets stored in S3 buckets<br>
+- script reproducible workflows that need to know which files exist<br>
+- automatically select resources or versions based on bucket contents<br>
+- check for expected input/output files in bucket-based pipelines</p>
+<p>Together, these three functions provide a streamlined way to browse, read, and write spatial datasets stored inside NINA’s internal S3 infrastructure.</p>
+
+
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

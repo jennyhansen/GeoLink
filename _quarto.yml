@@ -28,6 +28,8 @@ website:
             text: Overview
           - href: articles/functions_geospatialdata.qmd
             text: R:GeoSpatialData
+          - href: articles/functions_s3.qmd
+            text: S3 functions
 
 format:
   html:
