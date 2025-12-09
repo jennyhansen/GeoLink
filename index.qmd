@@ -33,7 +33,7 @@ pressure on NINA’s IT infrastructure. Ultimately, the project will provide a
 strategy for accessing and working with geospatial data as our organization 
 continues to grow.
 
-  Use the nevigation bar on the top to view the various data souurces and 
+  Use the navigation bar on the top to view the various data sources and 
   explore functions and how-to vignettes.
 
 
