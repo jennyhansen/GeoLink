@@ -21,6 +21,8 @@ website:
             text: GRASS GIS
           - href: articles/data_gisdb.qmd
             text: PostgreSQL GIS Database
+          - href: articles/data_s3.qmd
+            text: S3 buckets
           
       - text: Functions
         menu:

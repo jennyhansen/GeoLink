@@ -1,0 +1,114 @@
+---
+title: "S3 Storage at NINA"
+description: "A user-friendly introduction to S3 and how it is used at NINA."
+format:
+  html:
+    toc: true
+---
+
+# ☁️ Introduction to S3 Storage at NINA
+
+NINA is beginning to implement the **S3 storage protocol** as a modern and flexible way to store spatial data, project outputs, and large datasets that do not fit well into traditional file-folder structures. S3 (short for *Simple Storage Service*) is widely used in cloud computing. Amazon Web Services (AWS) is the
+primary cloud provider of S3, but NINA is using a local provider instead. The base URL of NINAs
+S3 buckets is `s3-int-1.nina.no`
+
+Because S3 is new to many NINA employees, this page provides a gentle, user-friendly introduction to what it is, how it works, and why it is becoming an important part of our data infrastructure.
+
+---
+
+# What is S3?
+
+S3 is not a typical file system with folders and subfolders. Instead, it is a **storage platform for objects**, where each object is a file stored inside a container called a **bucket**.  
+
+Think of it like this:
+
+- A **bucket** is similar to a project folder.
+- An **object** is a file stored inside the bucket.
+- An **object key** is the file’s “path” inside the bucket (e.g., `admin/grids/ssb_250m.parquet`).
+
+S3 is built for:
+
+- fast access to large datasets  
+- reliable and redundant storage  
+- sharing data without duplicating it  
+- flexible integration with analysis tools like R and Python  
+
+NINA’s S3 system is hosted internally, so data always stays within NINA’s network.
+
+---
+
+# Buckets vs. Folders vs. Files
+
+S3 uses slightly different terminology than a normal file system.
+
+| Concept | Traditional File System | S3 Equivalent |
+|--------|--------------------------|---------------|
+| Top-level container | Drive or Shared Folder | **Bucket** |
+| Directory | Folder | *Prefix* (simulated folder) |
+| File | File | **Object** |
+| Filepath | Path | **Object key** |
+
+Even though S3 does not have real folders, tools like the AWS console, NinaR, and GeoLink display buckets *as if* they contain folders. This makes S3 feel familiar even though the underlying structure is different.
+
+---
+
+# Why is NINA adopting S3?
+
+S3 offers several advantages over traditional shared drives:
+
+### **1. Handles large and complex file formats**
+Ideal for:
+- multi-band rasters  
+- very large vector datasets  
+- spatial databases exported as Parquet or GeoPackage  
+- high-resolution model predictions  
+
+### **2. Better for sharing data across projects**
+One central dataset can be accessed by many people without copying it.
+
+### **3. Supports modern geospatial formats**
+Formats like:
+- **GeoParquet**  
+- Cloud-Optimized GeoTIFF (**COG**)  are designed specifically for S3-style object storage.
+
+### **4. Works well with R and Python**
+The GeoLink package provides easy functions in R for:
+- listing buckets  
+- reading data directly from S3  
+- writing project outputs to buckets  
+
+Future work can include developing similar functions for Python.
+
+### **5. Integrates with automation**
+Great for workflows where models or scripts generate outputs automatically on servers.
+
+---
+
+# 🔌 Where is NINA’s S3 located?
+
+NINA’s S3 system is hosted **internally**, through a MinIO-based S3-compatible service.
+
+Internal endpoint:
+
+```
+s3-int-1.nina.no
+```
+
+This is not an external cloud service — it runs entirely inside NINA’s network.
+
+You can access S3 only from:
+
+- the **GIS server**
+- **RStudio servers** (rstudio.nina.no or rstudio-geo)
+- or a NINA computer connected via VPN
+
+This ensures data security and compliance.
+
+As part of the GeoLink project, we have developed several functions for working
+with geospatial data on S3 buckets. You can read the documentation at 
+**Functions → S3 functions**. You can also learn to work with the S3 protocol
+using the **S3 vignette** located under **Vignettes → S3Vignette**.
+
+
+
+

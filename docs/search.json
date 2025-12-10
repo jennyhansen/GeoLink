@@ -7,95 +7,32 @@
     "text": "This page will list exported functions from the GeoLink package."
   },
   {
-    "objectID": "articles/functions_s3.html",
-    "href": "articles/functions_s3.html",
-    "title": "Functions for S3 buckets",
+    "objectID": "articles/data_s3.html",
+    "href": "articles/data_s3.html",
+    "title": "S3 Storage at NINA",
     "section": "",
-    "text": "read_from_s3() loads spatial data directly from an S3 bucket and returns it as either an sf object (for vector data) or a SpatRaster (for raster data). The function detects the file format automatically from the file extension unless you specify it manually.\nThe function supports: - GeoParquet (.parquet) — read directly via Arrow + sfarrow\n- GeoPackage (.gpkg) — downloaded temporarily, then read with sf\n- GeoTIFF (.tif) — downloaded temporarily, then read with terra\nInternally, the function handles all S3 communication, temporary files, and format-specific reading. This means you can load S3-based spatial data with a single line of code, without worrying about URLs, credentials, or file formats.\nThis function is useful when: - you store datasets in buckets instead of local directories\n- you work with mixed formats (e.g., raster + vector)\n- you need a consistent interface for reading data from internal S3\n- you prefer lightweight, single-file spatial formats such as Parquet, GPKG, and GeoTIFF"
+    "text": "☁️ Introduction to S3 Storage at NINA\nNINA is beginning to implement the S3 storage protocol as a modern and flexible way to store spatial data, project outputs, and large datasets that do not fit well into traditional file-folder structures. S3 (short for Simple Storage Service) is widely used in cloud computing. Amazon Web Services (AWS) is the primary cloud provider of S3, but NINA is using a local provider instead. The base URL of NINAs S3 buckets is s3-int-1.nina.no\nBecause S3 is new to many NINA employees, this page provides a gentle, user-friendly introduction to what it is, how it works, and why it is becoming an important part of our data infrastructure.\n\n\n\nWhat is S3?\nS3 is not a typical file system with folders and subfolders. Instead, it is a storage platform for objects, where each object is a file stored inside a container called a bucket.\nThink of it like this:\n\nA bucket is similar to a project folder.\nAn object is a file stored inside the bucket.\nAn object key is the file’s “path” inside the bucket (e.g., admin/grids/ssb_250m.parquet).\n\nS3 is built for:\n\nfast access to large datasets\n\nreliable and redundant storage\n\nsharing data without duplicating it\n\nflexible integration with analysis tools like R and Python\n\nNINA’s S3 system is hosted internally, so data always stays within NINA’s network.\n\n\n\nBuckets vs. Folders vs. Files\nS3 uses slightly different terminology than a normal file system.\n\n\n\nConcept\nTraditional File System\nS3 Equivalent\n\n\n\n\nTop-level container\nDrive or Shared Folder\nBucket\n\n\nDirectory\nFolder\nPrefix (simulated folder)\n\n\nFile\nFile\nObject\n\n\nFilepath\nPath\nObject key\n\n\n\nEven though S3 does not have real folders, tools like the AWS console, NinaR, and GeoLink display buckets as if they contain folders. This makes S3 feel familiar even though the underlying structure is different.\n\n\n\nWhy is NINA adopting S3?\nS3 offers several advantages over traditional shared drives:\n\n1. Handles large and complex file formats\nIdeal for: - multi-band rasters\n- very large vector datasets\n- spatial databases exported as Parquet or GeoPackage\n- high-resolution model predictions\n\n\n2. Better for sharing data across projects\nOne central dataset can be accessed by many people without copying it.\n\n\n3. Supports modern geospatial formats\nFormats like: - GeoParquet\n- Cloud-Optimized GeoTIFF (COG) are designed specifically for S3-style object storage.\n\n\n4. Works well with R and Python\nThe GeoLink package provides easy functions in R for: - listing buckets\n- reading data directly from S3\n- writing project outputs to buckets\nFuture work can include developing similar functions for Python.\n\n\n5. Integrates with automation\nGreat for workflows where models or scripts generate outputs automatically on servers.\n\n\n\n\n🔌 Where is NINA’s S3 located?\nNINA’s S3 system is hosted internally, through a MinIO-based S3-compatible service.\nInternal endpoint:\ns3-int-1.nina.no\nThis is not an external cloud service — it runs entirely inside NINA’s network.\nYou can access S3 only from:\n\nthe GIS server\nRStudio servers (rstudio.nina.no or rstudio-geo)\nor a NINA computer connected via VPN\n\nThis ensures data security and compliance.\nAs part of the GeoLink project, we have developed several functions for working with geospatial data on S3 buckets. You can read the documentation at Functions → S3 functions. You can also learn to work with the S3 protocol using the S3 vignette located under Vignettes → S3Vignette."
   },
   {
-    "objectID": "articles/functions_s3.html#read_from_s3",
-    "href": "articles/functions_s3.html#read_from_s3",
-    "title": "Functions for S3 buckets",
+    "objectID": "articles/functions_geospatialdata.html#list_from_rgsd",
+    "href": "articles/functions_geospatialdata.html#list_from_rgsd",
+    "title": "Functions for data on R:",
+    "section": "list_from_rgsd()",
+    "text": "list_from_rgsd()\nlist_from_rgsd() provides a simple way to explore the contents of NINA’s shared GeoSpatialData directory, located at /data/R/GeoSpatialData on NINA’s servers. The directory contains a large number of spatial datasets organized into thematic folders, and this function makes it easier to inspect what is available without opening the directory manually.\nYou can supply either: - a full absolute path, such as /data/R/GeoSpatialData/Topography/Norway_N50, or\n- a relative subpath, such as \"Topography\" or \"Hydrography/Norway_Catchments/Original\".\nThe function then returns a list of everything inside that folder. You can control what gets returned using the type argument:\n\n\"folder\" – show only subdirectories\n\n\"file\" – show only files\n\n\"both\" – show everything (the default)\n\nThe return value is a character vector of full paths. The results are sorted so that folders appear before files, and items are sorted alphabetically within each group. This makes it easier to scan through large data directories and find the datasets you need.\nThis function is especially useful when: - you want to confirm the correct file path before calling import_from_rgsd()\n- you need to explore an unfamiliar part of the GeoSpatialData directory\n- you want to quickly check what versions, “Original/Processed” subfolders, or file formats are available\n- you are scripting data access and need reproducible directory navigation"
+  },
+  {
+    "objectID": "articles/functions_geospatialdata.html#import_from_rgsd",
+    "href": "articles/functions_geospatialdata.html#import_from_rgsd",
+    "title": "Functions for data on R:",
+    "section": "import_from_rgsd()",
+    "text": "import_from_rgsd()\nimport_from_rgsd() is a convenience function for loading spatial datasets directly from the GeoSpatialData directory. Instead of remembering which R package or function to use for each file type, this function automatically chooses the correct tool based on the file extension.\nYou can provide either: - a relative path from /data/R/GeoSpatialData, or\n- a full absolute path to a file or directory.\nThe function then determines the file type and loads it using the appropriate approach:\n\nVector formats\nHandled via sf: - Shapefiles (.shp) - GeoJSON files (.geojson) - GeoPackage files (.gpkg) – requires specifying a layer name\n- File Geodatabases (.gdb) – requires specifying a layer name\n- GeoParquet files (.parquet) (using sfarrow)\n\n\nRaster formats\nHandled via terra: - GeoTIFF (.tif, .tiff) - IMG, ASC, VRT - NetCDF (.nc) - Other raster formats supported by terra\nFor multi-layer file types (GPKG, GDB), you must supply a layer argument so the function knows which dataset inside the container to load. If you are unsure which layers are available, you can inspect them with:\nsf::st_layers(path_to_file)\nimport_from_rgsd() returns:\n\nan sf object when reading vector data\n\na SpatRaster when reading raster data\n\nThis function is helpful when:\n\nworking with multiple formats across a project\n\nstandardizing data access in shared scripts or pipelines\n\navoiding mistakes caused by mixing terra and sf usage\n\nloading datasets from deeply nested directories\n\nwriting reproducible code that does not depend on the working directory\n\nTogether, list_from_rgsd() and import_from_rgsd() streamline access to NINA’s shared spatial datasets and reduce the friction of navigating a large, diverse data archive."
+  },
+  {
+    "objectID": "articles/index.html",
+    "href": "articles/index.html",
+    "title": "Articles",
     "section": "",
-    "text": "read_from_s3() loads spatial data directly from an S3 bucket and returns it as either an sf object (for vector data) or a SpatRaster (for raster data). The function detects the file format automatically from the file extension unless you specify it manually.\nThe function supports: - GeoParquet (.parquet) — read directly via Arrow + sfarrow\n- GeoPackage (.gpkg) — downloaded temporarily, then read with sf\n- GeoTIFF (.tif) — downloaded temporarily, then read with terra\nInternally, the function handles all S3 communication, temporary files, and format-specific reading. This means you can load S3-based spatial data with a single line of code, without worrying about URLs, credentials, or file formats.\nThis function is useful when: - you store datasets in buckets instead of local directories\n- you work with mixed formats (e.g., raster + vector)\n- you need a consistent interface for reading data from internal S3\n- you prefer lightweight, single-file spatial formats such as Parquet, GPKG, and GeoTIFF"
-  },
-  {
-    "objectID": "articles/functions_s3.html#write_to_s3",
-    "href": "articles/functions_s3.html#write_to_s3",
-    "title": "Functions for S3 buckets",
-    "section": "write_to_s3()",
-    "text": "write_to_s3()\nwrite_to_s3() uploads spatial data (vector or raster) to an S3 bucket.\nIt handles both the conversion to a single-file format and the upload to the bucket.\nSupported output formats include: - .gpkg (GeoPackage) — supports multiple internal layers\n- .parquet (GeoParquet) — lightweight and highly portable\n- .tif (GeoTIFF) — for raster data\nNot supported: - shapefiles (.shp), because they require multiple companion files\n- Esri File Geodatabases (.gdb), because they are folder-based formats\nVectors (sf) are written using either st_write() or sfarrow::st_write_parquet(), and rasters (SpatRaster) are written with terra::writeRaster().\nThe function then uploads the resulting file to S3 using aws.s3::put_object().\nThis function is especially helpful for: - storing analysis-ready datasets in shared internal buckets\n- pipeline automation where outputs need to be uploaded as part of processing\n- converting spatial formats to stable, single-file S3-friendly versions\n- ensuring that exported data is consistently written with a reproducible workflow"
-  },
-  {
-    "objectID": "articles/functions_s3.html#list_from_s3",
-    "href": "articles/functions_s3.html#list_from_s3",
-    "title": "Functions for S3 buckets",
-    "section": "list_from_s3()",
-    "text": "list_from_s3()\nlist_from_s3() lists the files stored in an S3 bucket, with optional filtering by prefix (a folder-like path) or by file extension.\nIt returns either: - a vector of keys (file paths), or\n- a data frame with metadata (size, last modified time)\nYou can use prefix to list only the contents of a specific subfolder, such as:\nprefix = \"grunnkart/\"\nYou can also limit the results to a specific file type, such as:\nfile_type = \".parquet\"\nThis function is a practical way to: - explore datasets stored in S3 buckets\n- script reproducible workflows that need to know which files exist\n- automatically select resources or versions based on bucket contents\n- check for expected input/output files in bucket-based pipelines\nTogether, these three functions provide a streamlined way to browse, read, and write spatial datasets stored inside NINA’s internal S3 infrastructure."
-  },
-  {
-    "objectID": "articles/functions.html",
-    "href": "articles/functions.html",
-    "title": "Functions",
-    "section": "",
-    "text": "Overview of functions\nAs part of the GeoLink project, we have created a series of R functions to make it easier to work with spatial data in your R workflows.\nFunctions are designed for each major platform that hosts spatial data at NINA. Those platforms are the R:\\GeoSpatialData folder, GRASS, the PostGIS database, and S3 buckets.\nNote that some platforms will have functions for both reading and writing data on the platform. Others are read only.\nIt is not possible to write data onto the R:\\GeoSpatialData folder or the PostGIS database. You can write data to a GRASS mapset or to an S3 bucket.\nIndividual pages will describe the functions in more detail. Use the navigation bar to select the platform of interest."
-  },
-  {
-    "objectID": "articles/geodata_sources.html",
-    "href": "articles/geodata_sources.html",
-    "title": "Geospatial Data Sources",
-    "section": "",
-    "text": "This page provides an overview of the main geospatial data repositories used in the GeoLink project, with links to detailed pages for each source."
-  },
-  {
-    "objectID": "articles/geodata_sources.html#overview-of-data-sources",
-    "href": "articles/geodata_sources.html#overview-of-data-sources",
-    "title": "Geospatial Data Sources",
-    "section": "🗂️ Overview of Data Sources",
-    "text": "🗂️ Overview of Data Sources\n\n\n\nSource\nDescription\nLink to details\n\n\n\n\nGeoSpatialData\nCentral folder on the R drive with raster, vector, and grid data\nGeoSpatialData on R Drive\n\n\nGRASS GIS\nGRASS-based spatial database used for modeling and processing workflows\nGRASS GIS Environment\n\n\nGIS Database\nPostgreSQL/PostGIS database containing processed data ready for modeling\nPostgreSQL GIS Database"
-  },
-  {
-    "objectID": "LICENSE.html",
-    "href": "LICENSE.html",
-    "title": "MIT License",
-    "section": "",
-    "text": "MIT License\nCopyright (c) 2025 Jenny Hansen\nPermission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:\nThe above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.\nTHE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE."
-  },
-  {
-    "objectID": "GeoLink.html",
-    "href": "GeoLink.html",
-    "title": "Welcome to GeoLink",
-    "section": "",
-    "text": "This is the landing page for the GeoLink package website."
-  },
-  {
-    "objectID": "articles/data_geospatialdata.html",
-    "href": "articles/data_geospatialdata.html",
-    "title": "GeoSpatialData folder on the R Drive",
-    "section": "",
-    "text": "The GeoSpatialData folder on the R: drive is a centralized collection of raster, vector, and gridded spatial datasets used in many of NINA’s GIS and modeling workflows. It contains a wide range of core reference layers, including:\n\nLand cover and vegetation maps\n\nElevation models (DEM)\n\nHydrology, slope, and terrain derivatives\n\nAdministrative boundaries and reference grids (e.g., SSB grids)\n\nGridded climate data (e.g., seNorge)\n\nWhenever possible, it is recommended to use these shared datasets directly rather than downloading separate copies into local or project folders. Working from the shared R-drive structure reduces duplication and places less load on NINA’s data infrastructure.\n\n\nSpatial data on the R drive is organized into thematic categories. Some contain only a few datasets, while others include many versions or collections. The current top-level categories are:\n\nAdministrativeUnits\n\nAdresses\n\nAgriculture_aquaculture\n\nAreaManagement_ReportingUnits\n\nBiogeographicalRegions\n\nBuildings\n\nCadastralParcels\n\nDownloaded\n\nElevation\n\nEnvironmental_Monitoring_Facilities\n\nGeographicalNames\n\nGeology\n\nGeomorphology\n\ngrasscourse\n\nHabitats_biotopes\n\nHydrography\n\nLandCover\n\nLandUse\n\nMeteorology\n\nNaturalRiskZones\n\nOrthoimagery\n\nPopulation_demography\n\nProtectedSites\n\nSeaRegions\n\nSoil\n\nStatisticalUnits\n\nTopography\n\nTransportNetworks\n\nUtility_governmentalServices\n\nAn evolving data inventory spreadsheet is available for download:\n➡️ Download dataset overview (Excel)\nThis inventory provides a high-level overview of datasets available on various NINA platforms, including the GeoSpatialData folder. It is non-exhaustive and mainly covers national-scale datasets used in species distribution modeling, ecosystem accounting, and area planning.\n\n\n\nNavigating the data structure can be challenging. Within each category, multiple subfolders may exist, often representing different versions, time periods, or data sources. Most dataset folders follow a common internal structure:\n\nConverted\n\nOriginal\n\nProcessed\n\nScripts\n\nShared\n\nOriginal contains the raw, unmodified data exactly as downloaded from the source. This is typically what most users work with.\nConverted may contain alternative formats (e.g., shapefiles or file geodatabases) when the original dataset was in a different format such as SOSI. Not all datasets have content in the Converted folder, but some do.\nProcessed is more common and often includes clipped versions, projection changes, subsets for specific regions, or conversions to standardized NINA formats.\nScripts contains the scripts used to convert or process datasets (e.g., SOSI → SHP conversion, building virtual rasters, or other preprocessing steps).\nShared folders are generally empty; their intended purpose is unknown.\n\n\n\nYou can only access the GeoSpatialData folder from a NINA computer, either directly from a NINA office or remotely using AlwaysOnVPN. The folder is also available when working on one of the Linux servers (e.g., through Mounts → R → GeoSpatialData).\nNote that GeoSpatialData is read-only. You can import data from it, but you cannot modify or write to it. Any derived or processed data should be written to a local directory or a project folder.\nGeoLink includes two helper functions for listing and importing datasets from the GeoSpatialData folder. More information about these functions can be found under Functions → R:GeoSpatialData. You can also work through the GeoSpatialData vignette located under Vignettes → GeoSpatialData for a step-by-step guide on using GeoLink with R-drive data."
-  },
-  {
-    "objectID": "articles/data_geospatialdata.html#major-categories-of-data",
-    "href": "articles/data_geospatialdata.html#major-categories-of-data",
-    "title": "GeoSpatialData folder on the R Drive",
-    "section": "",
-    "text": "Spatial data on the R drive is organized into thematic categories. Some contain only a few datasets, while others include many versions or collections. The current top-level categories are:\n\nAdministrativeUnits\n\nAdresses\n\nAgriculture_aquaculture\n\nAreaManagement_ReportingUnits\n\nBiogeographicalRegions\n\nBuildings\n\nCadastralParcels\n\nDownloaded\n\nElevation\n\nEnvironmental_Monitoring_Facilities\n\nGeographicalNames\n\nGeology\n\nGeomorphology\n\ngrasscourse\n\nHabitats_biotopes\n\nHydrography\n\nLandCover\n\nLandUse\n\nMeteorology\n\nNaturalRiskZones\n\nOrthoimagery\n\nPopulation_demography\n\nProtectedSites\n\nSeaRegions\n\nSoil\n\nStatisticalUnits\n\nTopography\n\nTransportNetworks\n\nUtility_governmentalServices\n\nAn evolving data inventory spreadsheet is available for download:\n➡️ Download dataset overview (Excel)\nThis inventory provides a high-level overview of datasets available on various NINA platforms, including the GeoSpatialData folder. It is non-exhaustive and mainly covers national-scale datasets used in species distribution modeling, ecosystem accounting, and area planning."
-  },
-  {
-    "objectID": "articles/data_geospatialdata.html#subfolders",
-    "href": "articles/data_geospatialdata.html#subfolders",
-    "title": "GeoSpatialData folder on the R Drive",
-    "section": "",
-    "text": "Navigating the data structure can be challenging. Within each category, multiple subfolders may exist, often representing different versions, time periods, or data sources. Most dataset folders follow a common internal structure:\n\nConverted\n\nOriginal\n\nProcessed\n\nScripts\n\nShared\n\nOriginal contains the raw, unmodified data exactly as downloaded from the source. This is typically what most users work with.\nConverted may contain alternative formats (e.g., shapefiles or file geodatabases) when the original dataset was in a different format such as SOSI. Not all datasets have content in the Converted folder, but some do.\nProcessed is more common and often includes clipped versions, projection changes, subsets for specific regions, or conversions to standardized NINA formats.\nScripts contains the scripts used to convert or process datasets (e.g., SOSI → SHP conversion, building virtual rasters, or other preprocessing steps).\nShared folders are generally empty; their intended purpose is unknown."
-  },
-  {
-    "objectID": "articles/data_geospatialdata.html#working-with-data-in-the-geospatialdata-folder",
-    "href": "articles/data_geospatialdata.html#working-with-data-in-the-geospatialdata-folder",
-    "title": "GeoSpatialData folder on the R Drive",
-    "section": "",
-    "text": "You can only access the GeoSpatialData folder from a NINA computer, either directly from a NINA office or remotely using AlwaysOnVPN. The folder is also available when working on one of the Linux servers (e.g., through Mounts → R → GeoSpatialData).\nNote that GeoSpatialData is read-only. You can import data from it, but you cannot modify or write to it. Any derived or processed data should be written to a local directory or a project folder.\nGeoLink includes two helper functions for listing and importing datasets from the GeoSpatialData folder. More information about these functions can be found under Functions → R:GeoSpatialData. You can also work through the GeoSpatialData vignette located under Vignettes → GeoSpatialData for a step-by-step guide on using GeoLink with R-drive data."
+    "text": "This page will contain longer documentation, vignettes, or use-case tutorials."
   },
   {
     "objectID": "articles/data_grass.html",
@@ -133,25 +70,95 @@
     "text": "Checking the active region, resolution, and mask\nBecause region and mask settings persist until changed, it’s important to check them regularly.\n\nPrint region (human-readable)\nexecGRASS(\"g.region\", flags = \"p\")\nThis prints:\n\nnorth/south/east/west bounds\n\ncurrent resolution\n\nrows/cols\n\ndata type\n\nprojection info\n\n\n\nCheck whether a mask is active\nexecGRASS(\"g.list\", parameters = list(type = \"raster\", pattern = \"MASK\"), intern = TRUE)\nIf a mask is active, you will see \"MASK\" in the output.\n\nNavigate to Functions → GRASS functions to see the GRASS-related helper functions available in GeoLink. A full vignette (“GRASS vignette”) is also available under the vignette options and demonstrates how to work with GRASS datasets stored at NINA."
   },
   {
-    "objectID": "articles/index.html",
-    "href": "articles/index.html",
-    "title": "Articles",
+    "objectID": "articles/data_geospatialdata.html",
+    "href": "articles/data_geospatialdata.html",
+    "title": "GeoSpatialData folder on the R Drive",
     "section": "",
-    "text": "This page will contain longer documentation, vignettes, or use-case tutorials."
+    "text": "The GeoSpatialData folder on the R: drive is a centralized collection of raster, vector, and gridded spatial datasets used in many of NINA’s GIS and modeling workflows. It contains a wide range of core reference layers, including:\n\nLand cover and vegetation maps\n\nElevation models (DEM)\n\nHydrology, slope, and terrain derivatives\n\nAdministrative boundaries and reference grids (e.g., SSB grids)\n\nGridded climate data (e.g., seNorge)\n\nWhenever possible, it is recommended to use these shared datasets directly rather than downloading separate copies into local or project folders. Working from the shared R-drive structure reduces duplication and places less load on NINA’s data infrastructure.\n\n\nSpatial data on the R drive is organized into thematic categories. Some contain only a few datasets, while others include many versions or collections. The current top-level categories are:\n\nAdministrativeUnits\n\nAdresses\n\nAgriculture_aquaculture\n\nAreaManagement_ReportingUnits\n\nBiogeographicalRegions\n\nBuildings\n\nCadastralParcels\n\nDownloaded\n\nElevation\n\nEnvironmental_Monitoring_Facilities\n\nGeographicalNames\n\nGeology\n\nGeomorphology\n\ngrasscourse\n\nHabitats_biotopes\n\nHydrography\n\nLandCover\n\nLandUse\n\nMeteorology\n\nNaturalRiskZones\n\nOrthoimagery\n\nPopulation_demography\n\nProtectedSites\n\nSeaRegions\n\nSoil\n\nStatisticalUnits\n\nTopography\n\nTransportNetworks\n\nUtility_governmentalServices\n\nAn evolving data inventory spreadsheet is available for download:\n➡️ Download dataset overview (Excel)\nThis inventory provides a high-level overview of datasets available on various NINA platforms, including the GeoSpatialData folder. It is non-exhaustive and mainly covers national-scale datasets used in species distribution modeling, ecosystem accounting, and area planning.\n\n\n\nNavigating the data structure can be challenging. Within each category, multiple subfolders may exist, often representing different versions, time periods, or data sources. Most dataset folders follow a common internal structure:\n\nConverted\n\nOriginal\n\nProcessed\n\nScripts\n\nShared\n\nOriginal contains the raw, unmodified data exactly as downloaded from the source. This is typically what most users work with.\nConverted may contain alternative formats (e.g., shapefiles or file geodatabases) when the original dataset was in a different format such as SOSI. Not all datasets have content in the Converted folder, but some do.\nProcessed is more common and often includes clipped versions, projection changes, subsets for specific regions, or conversions to standardized NINA formats.\nScripts contains the scripts used to convert or process datasets (e.g., SOSI → SHP conversion, building virtual rasters, or other preprocessing steps).\nShared folders are generally empty; their intended purpose is unknown.\n\n\n\nYou can only access the GeoSpatialData folder from a NINA computer, either directly from a NINA office or remotely using AlwaysOnVPN. The folder is also available when working on one of the Linux servers (e.g., through Mounts → R → GeoSpatialData).\nNote that GeoSpatialData is read-only. You can import data from it, but you cannot modify or write to it. Any derived or processed data should be written to a local directory or a project folder.\nGeoLink includes two helper functions for listing and importing datasets from the GeoSpatialData folder. More information about these functions can be found under Functions → R:GeoSpatialData. You can also work through the GeoSpatialData vignette located under Vignettes → GeoSpatialData for a step-by-step guide on using GeoLink with R-drive data."
   },
   {
-    "objectID": "articles/functions_geospatialdata.html#list_from_rgsd",
-    "href": "articles/functions_geospatialdata.html#list_from_rgsd",
-    "title": "Functions for data on R:",
-    "section": "list_from_rgsd()",
-    "text": "list_from_rgsd()\nlist_from_rgsd() provides a simple way to explore the contents of NINA’s shared GeoSpatialData directory, located at /data/R/GeoSpatialData on NINA’s servers. The directory contains a large number of spatial datasets organized into thematic folders, and this function makes it easier to inspect what is available without opening the directory manually.\nYou can supply either: - a full absolute path, such as /data/R/GeoSpatialData/Topography/Norway_N50, or\n- a relative subpath, such as \"Topography\" or \"Hydrography/Norway_Catchments/Original\".\nThe function then returns a list of everything inside that folder. You can control what gets returned using the type argument:\n\n\"folder\" – show only subdirectories\n\n\"file\" – show only files\n\n\"both\" – show everything (the default)\n\nThe return value is a character vector of full paths. The results are sorted so that folders appear before files, and items are sorted alphabetically within each group. This makes it easier to scan through large data directories and find the datasets you need.\nThis function is especially useful when: - you want to confirm the correct file path before calling import_from_rgsd()\n- you need to explore an unfamiliar part of the GeoSpatialData directory\n- you want to quickly check what versions, “Original/Processed” subfolders, or file formats are available\n- you are scripting data access and need reproducible directory navigation"
+    "objectID": "articles/data_geospatialdata.html#major-categories-of-data",
+    "href": "articles/data_geospatialdata.html#major-categories-of-data",
+    "title": "GeoSpatialData folder on the R Drive",
+    "section": "",
+    "text": "Spatial data on the R drive is organized into thematic categories. Some contain only a few datasets, while others include many versions or collections. The current top-level categories are:\n\nAdministrativeUnits\n\nAdresses\n\nAgriculture_aquaculture\n\nAreaManagement_ReportingUnits\n\nBiogeographicalRegions\n\nBuildings\n\nCadastralParcels\n\nDownloaded\n\nElevation\n\nEnvironmental_Monitoring_Facilities\n\nGeographicalNames\n\nGeology\n\nGeomorphology\n\ngrasscourse\n\nHabitats_biotopes\n\nHydrography\n\nLandCover\n\nLandUse\n\nMeteorology\n\nNaturalRiskZones\n\nOrthoimagery\n\nPopulation_demography\n\nProtectedSites\n\nSeaRegions\n\nSoil\n\nStatisticalUnits\n\nTopography\n\nTransportNetworks\n\nUtility_governmentalServices\n\nAn evolving data inventory spreadsheet is available for download:\n➡️ Download dataset overview (Excel)\nThis inventory provides a high-level overview of datasets available on various NINA platforms, including the GeoSpatialData folder. It is non-exhaustive and mainly covers national-scale datasets used in species distribution modeling, ecosystem accounting, and area planning."
   },
   {
-    "objectID": "articles/functions_geospatialdata.html#import_from_rgsd",
-    "href": "articles/functions_geospatialdata.html#import_from_rgsd",
-    "title": "Functions for data on R:",
-    "section": "import_from_rgsd()",
-    "text": "import_from_rgsd()\nimport_from_rgsd() is a convenience function for loading spatial datasets directly from the GeoSpatialData directory. Instead of remembering which R package or function to use for each file type, this function automatically chooses the correct tool based on the file extension.\nYou can provide either: - a relative path from /data/R/GeoSpatialData, or\n- a full absolute path to a file or directory.\nThe function then determines the file type and loads it using the appropriate approach:\n\nVector formats\nHandled via sf: - Shapefiles (.shp) - GeoJSON files (.geojson) - GeoPackage files (.gpkg) – requires specifying a layer name\n- File Geodatabases (.gdb) – requires specifying a layer name\n- GeoParquet files (.parquet) (using sfarrow)\n\n\nRaster formats\nHandled via terra: - GeoTIFF (.tif, .tiff) - IMG, ASC, VRT - NetCDF (.nc) - Other raster formats supported by terra\nFor multi-layer file types (GPKG, GDB), you must supply a layer argument so the function knows which dataset inside the container to load. If you are unsure which layers are available, you can inspect them with:\nsf::st_layers(path_to_file)\nimport_from_rgsd() returns:\n\nan sf object when reading vector data\n\na SpatRaster when reading raster data\n\nThis function is helpful when:\n\nworking with multiple formats across a project\n\nstandardizing data access in shared scripts or pipelines\n\navoiding mistakes caused by mixing terra and sf usage\n\nloading datasets from deeply nested directories\n\nwriting reproducible code that does not depend on the working directory\n\nTogether, list_from_rgsd() and import_from_rgsd() streamline access to NINA’s shared spatial datasets and reduce the friction of navigating a large, diverse data archive."
+    "objectID": "articles/data_geospatialdata.html#subfolders",
+    "href": "articles/data_geospatialdata.html#subfolders",
+    "title": "GeoSpatialData folder on the R Drive",
+    "section": "",
+    "text": "Navigating the data structure can be challenging. Within each category, multiple subfolders may exist, often representing different versions, time periods, or data sources. Most dataset folders follow a common internal structure:\n\nConverted\n\nOriginal\n\nProcessed\n\nScripts\n\nShared\n\nOriginal contains the raw, unmodified data exactly as downloaded from the source. This is typically what most users work with.\nConverted may contain alternative formats (e.g., shapefiles or file geodatabases) when the original dataset was in a different format such as SOSI. Not all datasets have content in the Converted folder, but some do.\nProcessed is more common and often includes clipped versions, projection changes, subsets for specific regions, or conversions to standardized NINA formats.\nScripts contains the scripts used to convert or process datasets (e.g., SOSI → SHP conversion, building virtual rasters, or other preprocessing steps).\nShared folders are generally empty; their intended purpose is unknown."
+  },
+  {
+    "objectID": "articles/data_geospatialdata.html#working-with-data-in-the-geospatialdata-folder",
+    "href": "articles/data_geospatialdata.html#working-with-data-in-the-geospatialdata-folder",
+    "title": "GeoSpatialData folder on the R Drive",
+    "section": "",
+    "text": "You can only access the GeoSpatialData folder from a NINA computer, either directly from a NINA office or remotely using AlwaysOnVPN. The folder is also available when working on one of the Linux servers (e.g., through Mounts → R → GeoSpatialData).\nNote that GeoSpatialData is read-only. You can import data from it, but you cannot modify or write to it. Any derived or processed data should be written to a local directory or a project folder.\nGeoLink includes two helper functions for listing and importing datasets from the GeoSpatialData folder. More information about these functions can be found under Functions → R:GeoSpatialData. You can also work through the GeoSpatialData vignette located under Vignettes → GeoSpatialData for a step-by-step guide on using GeoLink with R-drive data."
+  },
+  {
+    "objectID": "GeoLink.html",
+    "href": "GeoLink.html",
+    "title": "Welcome to GeoLink",
+    "section": "",
+    "text": "This is the landing page for the GeoLink package website."
+  },
+  {
+    "objectID": "LICENSE.html",
+    "href": "LICENSE.html",
+    "title": "MIT License",
+    "section": "",
+    "text": "MIT License\nCopyright (c) 2025 Jenny Hansen\nPermission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:\nThe above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.\nTHE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE."
+  },
+  {
+    "objectID": "articles/geodata_sources.html",
+    "href": "articles/geodata_sources.html",
+    "title": "Geospatial Data Sources",
+    "section": "",
+    "text": "This page provides an overview of the main geospatial data repositories used in the GeoLink project, with links to detailed pages for each source."
+  },
+  {
+    "objectID": "articles/geodata_sources.html#overview-of-data-sources",
+    "href": "articles/geodata_sources.html#overview-of-data-sources",
+    "title": "Geospatial Data Sources",
+    "section": "🗂️ Overview of Data Sources",
+    "text": "🗂️ Overview of Data Sources\n\n\n\nSource\nDescription\nLink to details\n\n\n\n\nGeoSpatialData\nCentral folder on the R drive with raster, vector, and grid data\nGeoSpatialData on R Drive\n\n\nGRASS GIS\nGRASS-based spatial database used for modeling and processing workflows\nGRASS GIS Environment\n\n\nGIS Database\nPostgreSQL/PostGIS database containing processed data ready for modeling\nPostgreSQL GIS Database"
+  },
+  {
+    "objectID": "articles/functions.html",
+    "href": "articles/functions.html",
+    "title": "Functions",
+    "section": "",
+    "text": "Overview of functions\nAs part of the GeoLink project, we have created a series of R functions to make it easier to work with spatial data in your R workflows.\nFunctions are designed for each major platform that hosts spatial data at NINA. Those platforms are the R:\\GeoSpatialData folder, GRASS, the PostGIS database, and S3 buckets.\nNote that some platforms will have functions for both reading and writing data on the platform. Others are read only.\nIt is not possible to write data onto the R:\\GeoSpatialData folder or the PostGIS database. You can write data to a GRASS mapset or to an S3 bucket.\nIndividual pages will describe the functions in more detail. Use the navigation bar to select the platform of interest."
+  },
+  {
+    "objectID": "articles/functions_s3.html",
+    "href": "articles/functions_s3.html",
+    "title": "Functions for S3 buckets",
+    "section": "",
+    "text": "read_from_s3() loads spatial data directly from an S3 bucket and returns it as either an sf object (for vector data) or a SpatRaster (for raster data). The function detects the file format automatically from the file extension unless you specify it manually.\nThe function supports: - GeoParquet (.parquet) — read directly via Arrow + sfarrow\n- GeoPackage (.gpkg) — downloaded temporarily, then read with sf\n- GeoTIFF (.tif) — downloaded temporarily, then read with terra\nInternally, the function handles all S3 communication, temporary files, and format-specific reading. This means you can load S3-based spatial data with a single line of code, without worrying about URLs, credentials, or file formats.\nThis function is useful when: - you store datasets in buckets instead of local directories\n- you work with mixed formats (e.g., raster + vector)\n- you need a consistent interface for reading data from internal S3\n- you prefer lightweight, single-file spatial formats such as Parquet, GPKG, and GeoTIFF"
+  },
+  {
+    "objectID": "articles/functions_s3.html#read_from_s3",
+    "href": "articles/functions_s3.html#read_from_s3",
+    "title": "Functions for S3 buckets",
+    "section": "",
+    "text": "read_from_s3() loads spatial data directly from an S3 bucket and returns it as either an sf object (for vector data) or a SpatRaster (for raster data). The function detects the file format automatically from the file extension unless you specify it manually.\nThe function supports: - GeoParquet (.parquet) — read directly via Arrow + sfarrow\n- GeoPackage (.gpkg) — downloaded temporarily, then read with sf\n- GeoTIFF (.tif) — downloaded temporarily, then read with terra\nInternally, the function handles all S3 communication, temporary files, and format-specific reading. This means you can load S3-based spatial data with a single line of code, without worrying about URLs, credentials, or file formats.\nThis function is useful when: - you store datasets in buckets instead of local directories\n- you work with mixed formats (e.g., raster + vector)\n- you need a consistent interface for reading data from internal S3\n- you prefer lightweight, single-file spatial formats such as Parquet, GPKG, and GeoTIFF"
+  },
+  {
+    "objectID": "articles/functions_s3.html#write_to_s3",
+    "href": "articles/functions_s3.html#write_to_s3",
+    "title": "Functions for S3 buckets",
+    "section": "write_to_s3()",
+    "text": "write_to_s3()\nwrite_to_s3() uploads spatial data (vector or raster) to an S3 bucket.\nIt handles both the conversion to a single-file format and the upload to the bucket.\nSupported output formats include: - .gpkg (GeoPackage) — supports multiple internal layers\n- .parquet (GeoParquet) — lightweight and highly portable\n- .tif (GeoTIFF) — for raster data\nNot supported: - shapefiles (.shp), because they require multiple companion files\n- Esri File Geodatabases (.gdb), because they are folder-based formats\nVectors (sf) are written using either st_write() or sfarrow::st_write_parquet(), and rasters (SpatRaster) are written with terra::writeRaster().\nThe function then uploads the resulting file to S3 using aws.s3::put_object().\nThis function is especially helpful for: - storing analysis-ready datasets in shared internal buckets\n- pipeline automation where outputs need to be uploaded as part of processing\n- converting spatial formats to stable, single-file S3-friendly versions\n- ensuring that exported data is consistently written with a reproducible workflow"
+  },
+  {
+    "objectID": "articles/functions_s3.html#list_from_s3",
+    "href": "articles/functions_s3.html#list_from_s3",
+    "title": "Functions for S3 buckets",
+    "section": "list_from_s3()",
+    "text": "list_from_s3()\nlist_from_s3() lists the files stored in an S3 bucket, with optional filtering by prefix (a folder-like path) or by file extension.\nIt returns either: - a vector of keys (file paths), or\n- a data frame with metadata (size, last modified time)\nYou can use prefix to list only the contents of a specific subfolder, such as:\nprefix = \"grunnkart/\"\nYou can also limit the results to a specific file type, such as:\nfile_type = \".parquet\"\nThis function is a practical way to: - explore datasets stored in S3 buckets\n- script reproducible workflows that need to know which files exist\n- automatically select resources or versions based on bucket contents\n- check for expected input/output files in bucket-based pipelines\nTogether, these three functions provide a streamlined way to browse, read, and write spatial datasets stored inside NINA’s internal S3 infrastructure."
   },
   {
     "objectID": "index.html",
