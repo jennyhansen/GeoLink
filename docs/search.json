@@ -9,28 +9,28 @@
   {
     "objectID": "articles/vignette_geospatialdata.html",
     "href": "articles/vignette_geospatialdata.html",
-    "title": "GeoSpatialData vignette",
+    "title": "Introduction",
     "section": "",
     "text": "NINA maintains a large, shared collection of raster and vector datasets on the R: drive.\nIf you are on a Linux server, it can be accessed these two ways:\n/data/R/GeoSpatialData\n~/Mounts/R/GeoSpatialData\n\nThis directory contains national base layers, monitoring datasets, elevation models, hydrological products, meteorological grids, and many other commonly used spatial layers.\nThe GeoLink package provides two helper functions to make it easier to browse and import these datasets directly from R:\n\nlist_from_rgsd() — lists files and subfolders within the GeoSpatialData directory\n\nimport_from_rgsd() — loads spatial data (vector or raster) into R using sf, terra, or sfarrow\n\nThis vignette shows how to use both functions.\n\nImportant: These functions only work on NINA servers. You must be working on the GIS server (connect via Omnissa Horizon Client) or one of the RStudio servers, https://rstudio.nina.no/ or https://rstudio-geo.nina.no/"
   },
   {
     "objectID": "articles/vignette_geospatialdata.html#import-a-raster-geotiff",
     "href": "articles/vignette_geospatialdata.html#import-a-raster-geotiff",
-    "title": "GeoSpatialData vignette",
+    "title": "Introduction",
     "section": "Import a raster (GeoTIFF)",
     "text": "Import a raster (GeoTIFF)\nelev &lt;- import_from_rgsd(\n  \"Elevation/Fenoscandia_DEM_10m/Original/dem_10m_fenoscandia.tif\"\n)\nelev\nThe function returns a SpatRaster object from the terra package."
   },
   {
     "objectID": "articles/vignette_geospatialdata.html#import-a-vector-shapefile",
     "href": "articles/vignette_geospatialdata.html#import-a-vector-shapefile",
-    "title": "GeoSpatialData vignette",
+    "title": "Introduction",
     "section": "Import a vector (Shapefile)",
     "text": "Import a vector (Shapefile)\nhuts &lt;- import_from_rgsd(\n  \"Buildings/Norway_FKB_Buildings/Processed/N50_TouristCabins/Norway_TouristCabins_ETRS89_UTM_zone_33N.shp\"\n)\nhuts\nThis returns an sf object."
   },
   {
     "objectID": "articles/vignette_geospatialdata.html#import-from-a-file-geodatabase-.gdb",
     "href": "articles/vignette_geospatialdata.html#import-from-a-file-geodatabase-.gdb",
-    "title": "GeoSpatialData vignette",
+    "title": "Introduction",
     "section": "Import from a file geodatabase (.gdb)",
     "text": "Import from a file geodatabase (.gdb)\nGDB files contain multiple layers, so you must specify one:\ncover &lt;- import_from_rgsd(\n  name = \"/data/R/GeoSpatialData/Topography/Norway_N50/Original/versjon20241231/N50 Kartdata FGDB-format/Basisdata_03_Oslo_25832_N50Kartdata_FGDB.gdb\",\n  layer = \"N50_Arealdekke_omrade\"\n)\nTo list available layers:\nsf::st_layers(\"/data/R/GeoSpatialData/Topography/Norway_N50/Original/versjon20241231/N50 Kartdata FGDB-format/Basisdata_03_Oslo_25832_N50Kartdata_FGDB.gdb\")"
   },

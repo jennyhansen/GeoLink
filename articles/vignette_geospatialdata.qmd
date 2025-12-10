@@ -1,6 +1,4 @@
 ---
-title: "GeoSpatialData vignette"
-subtitle: "A practical guide to listing and importing spatial datasets using GeoLink"
 format:
   html:
     toc: true
