@@ -154,8 +154,12 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#geospatialdata-on-the-r-drive" id="toc-geospatialdata-on-the-r-drive" class="nav-link active" data-scroll-target="#geospatialdata-on-the-r-drive">🗺️ GeoSpatialData on the R Drive</a></li>
-  <li><a href="#geolink-functions-for-r" id="toc-geolink-functions-for-r" class="nav-link" data-scroll-target="#geolink-functions-for-r">GeoLink functions for R:</a></li>
+  <li><a href="#geospatialdata-on-the-r-drive" id="toc-geospatialdata-on-the-r-drive" class="nav-link active" data-scroll-target="#geospatialdata-on-the-r-drive">🗺️ GeoSpatialData on the R Drive</a>
+  <ul class="collapse">
+  <li><a href="#major-categories-of-data" id="toc-major-categories-of-data" class="nav-link" data-scroll-target="#major-categories-of-data">Major categories of data</a></li>
+  <li><a href="#subfolders" id="toc-subfolders" class="nav-link" data-scroll-target="#subfolders">Subfolders</a></li>
+  <li><a href="#working-with-data-in-the-geospatialdata-folder" id="toc-working-with-data-in-the-geospatialdata-folder" class="nav-link" data-scroll-target="#working-with-data-in-the-geospatialdata-folder">Working with data in the GeoSpatialData folder</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -183,30 +187,113 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="geospatialdata-on-the-r-drive" class="level1">
 <h1>🗺️ GeoSpatialData on the R Drive</h1>
-<p>The <code>GeoSpatialData</code> folder on the R: drive is a centralized collection of raster, vector, and gridded spatial datasets used in many of NINA’s GIS workflows. It includes base layers such as:</p>
+<p>The <code>GeoSpatialData</code> folder on the R: drive is a centralized collection of raster, vector, and gridded spatial datasets used in many of NINA’s GIS and modeling workflows. It contains a wide range of core reference layers, including:</p>
 <ul>
-<li>Land cover and vegetation maps</li>
-<li>Elevation models (DEM)</li>
-<li>Hydrology and slope layers</li>
-<li>Municipality boundaries and grids (e.g., SSB grids)</li>
-<li>Gridded climate data</li>
+<li>Land cover and vegetation maps<br>
+</li>
+<li>Elevation models (DEM)<br>
+</li>
+<li>Hydrology, slope, and terrain derivatives<br>
+</li>
+<li>Administrative boundaries and reference grids (e.g., SSB grids)<br>
+</li>
+<li>Gridded climate data (e.g., seNorge)</li>
 </ul>
-<p>There is a data inventory Excel spreadsheet at <code>R:\GeoSpatialData\Data\_Inventory.xlsx</code> where you can find the most current overview of the data available on the R drive. Data is generally grouped into broad categories such as AdministrativeUnits, Elevation, Hydrography, Landcover, StatisticalUnits, Topography, etc.</p>
-<p>Within each subfolder of a category, you can expect to see five subfolders:</p>
-<ol type="1">
-<li>Converted</li>
-<li>Original</li>
-<li>Processed</li>
-<li>Scripts</li>
-<li>Shared</li>
-</ol>
-<p>Original (raw) data is in the Original subfolder and is what most people generally work with. The Converted subfolder is usually empty, but some may contain data, e.g.&nbsp;Norway_AdministrativeUnits in AdministrativeUnits. Many of the datasets will have files in the Processed folder. This may include data converted from one type to another, data clipped or subset to a specific region, changes in projections (CRS), etc. The Scripts subfolder will contain the relevant scripts used to process or convert data, e.g.&nbsp;from SOSI to shp. The purpose of the Shared subfolder is unknown.</p>
-<p>GeoLink contains a pair of helper functions to find and import data from the GeoSpatialData folder on the R drive. Note that these only work when working from the [NINA RStudio server] (https://rstudio.nina.no) or the GIS server (accessed through Omnissa Horizon Client.</p>
+<p>Whenever possible, it is recommended to use these shared datasets directly rather than downloading separate copies into local or project folders. Working from the shared R-drive structure reduces duplication and places less load on NINA’s data infrastructure.</p>
+<section id="major-categories-of-data" class="level2">
+<h2 class="anchored" data-anchor-id="major-categories-of-data">Major categories of data</h2>
+<p>Spatial data on the R drive is organized into thematic categories. Some contain only a few datasets, while others include many versions or collections. The current top-level categories are:</p>
+<ul>
+<li>AdministrativeUnits<br>
+</li>
+<li>Adresses<br>
+</li>
+<li>Agriculture_aquaculture<br>
+</li>
+<li>AreaManagement_ReportingUnits<br>
+</li>
+<li>BiogeographicalRegions<br>
+</li>
+<li>Buildings<br>
+</li>
+<li>CadastralParcels<br>
+</li>
+<li>Downloaded<br>
+</li>
+<li>Elevation<br>
+</li>
+<li>Environmental_Monitoring_Facilities<br>
+</li>
+<li>GeographicalNames<br>
+</li>
+<li>Geology<br>
+</li>
+<li>Geomorphology<br>
+</li>
+<li>grasscourse<br>
+</li>
+<li>Habitats_biotopes<br>
+</li>
+<li>Hydrography<br>
+</li>
+<li>LandCover<br>
+</li>
+<li>LandUse<br>
+</li>
+<li>Meteorology<br>
+</li>
+<li>NaturalRiskZones<br>
+</li>
+<li>Orthoimagery<br>
+</li>
+<li>Population_demography<br>
+</li>
+<li>ProtectedSites<br>
+</li>
+<li>SeaRegions<br>
+</li>
+<li>Soil<br>
+</li>
+<li>StatisticalUnits<br>
+</li>
+<li>Topography<br>
+</li>
+<li>TransportNetworks<br>
+</li>
+<li>Utility_governmentalServices</li>
+</ul>
+<p>An evolving data inventory spreadsheet is available for download:<br>
+<a href="data/spatial_data_inventory.xlsx">➡️ Download dataset overview (Excel)</a></p>
+<p>This inventory provides a high-level overview of datasets available on various NINA platforms, including the GeoSpatialData folder. It is non-exhaustive and mainly covers national-scale datasets used in species distribution modeling, ecosystem accounting, and area planning.</p>
 </section>
-<section id="geolink-functions-for-r" class="level1">
-<h1>GeoLink functions for R:</h1>
+<section id="subfolders" class="level2">
+<h2 class="anchored" data-anchor-id="subfolders">Subfolders</h2>
+<p>Navigating the data structure can be challenging. Within each category, multiple subfolders may exist, often representing different versions, time periods, or data sources. Most dataset folders follow a common internal structure:</p>
+<ol type="1">
+<li><strong>Converted</strong><br>
+</li>
+<li><strong>Original</strong><br>
+</li>
+<li><strong>Processed</strong><br>
+</li>
+<li><strong>Scripts</strong><br>
+</li>
+<li><strong>Shared</strong></li>
+</ol>
+<p><strong>Original</strong> contains the raw, unmodified data exactly as downloaded from the source. This is typically what most users work with.</p>
+<p><strong>Converted</strong> may contain alternative formats (e.g., shapefiles or file geodatabases) when the original dataset was in a different format such as SOSI. Not all datasets have content in the Converted folder, but some do.</p>
+<p><strong>Processed</strong> is more common and often includes clipped versions, projection changes, subsets for specific regions, or conversions to standardized NINA formats.</p>
+<p><strong>Scripts</strong> contains the scripts used to convert or process datasets (e.g., SOSI → SHP conversion, building virtual rasters, or other preprocessing steps).</p>
+<p><strong>Shared</strong> folders are generally empty; their intended purpose is unknown.</p>
+</section>
+<section id="working-with-data-in-the-geospatialdata-folder" class="level2">
+<h2 class="anchored" data-anchor-id="working-with-data-in-the-geospatialdata-folder">Working with data in the GeoSpatialData folder</h2>
+<p>You can only access the GeoSpatialData folder from a NINA computer, either directly from a NINA office or remotely using AlwaysOnVPN. The folder is also available when working on one of the Linux servers (e.g., through <strong>Mounts → R → GeoSpatialData</strong>).</p>
+<p>Note that GeoSpatialData is <strong>read-only</strong>. You can import data from it, but you cannot modify or write to it. Any derived or processed data should be written to a local directory or a project folder.</p>
+<p>GeoLink includes two helper functions for listing and importing datasets from the GeoSpatialData folder. More information about these functions can be found under <strong>Functions → R:GeoSpatialData</strong>. You can also work through the <strong>GeoSpatialData vignette</strong> located under <strong>Vignettes → GeoSpatialData</strong> for a step-by-step guide on using GeoLink with R-drive data.</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
