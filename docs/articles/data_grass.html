@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="description" content="Overview of GRASS GIS and how it differs from typical file-based GIS workflows.">
 
-<title>GeoLink</title>
+<title>GeoLink - GRASS GIS</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -150,16 +185,137 @@ ul.task-list li input[type="checkbox"] {
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a></li>
+  <li><a href="#accessing-grass-data-at-nina" id="toc-accessing-grass-data-at-nina" class="nav-link" data-scroll-target="#accessing-grass-data-at-nina">Accessing GRASS data at NINA</a></li>
+  <li><a href="#understanding-region-resolution-and-masks" id="toc-understanding-region-resolution-and-masks" class="nav-link" data-scroll-target="#understanding-region-resolution-and-masks">Understanding region, resolution, and masks</a>
+  <ul class="collapse">
+  <li><a href="#masks" id="toc-masks" class="nav-link" data-scroll-target="#masks">Masks</a></li>
+  </ul></li>
+  <li><a href="#checking-the-active-region-resolution-and-mask" id="toc-checking-the-active-region-resolution-and-mask" class="nav-link" data-scroll-target="#checking-the-active-region-resolution-and-mask">Checking the active region, resolution, and mask</a>
+  <ul class="collapse">
+  <li><a href="#print-region-human-readable" id="toc-print-region-human-readable" class="nav-link" data-scroll-target="#print-region-human-readable">Print region (human-readable)</a></li>
+  <li><a href="#check-whether-a-mask-is-active" id="toc-check-whether-a-mask-is-active" class="nav-link" data-scroll-target="#check-whether-a-mask-is-active">Check whether a mask is active</a></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">GRASS GIS</h1>
+</div>
+
+<div>
+  <div class="description">
+    Overview of GRASS GIS and how it differs from typical file-based GIS workflows.
+  </div>
+</div>
 
 
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
 
 
+</header>
 
+
+<section id="overview" class="level2">
+<h2 class="anchored" data-anchor-id="overview">Overview</h2>
+<p>GRASS GIS (Geographic Resources Analysis Support System) is an open-source geospatial analysis platform built around a highly structured data management model. Instead of working with standalone files like GeoTIFFs or shapefiles, GRASS organizes all data inside a <strong>GIS database</strong>—a directory structure composed of <em>locations</em> and <em>mapsets</em>. Each location has a defined coordinate reference system (CRS), and every raster or vector layer stored inside it must conform to that CRS.</p>
+<p>At NINA, locations are typically named after the CRS they use—for example, <code>ETRS_32N</code> or <code>ETRS_33N</code>. Within each location, mapsets follow a naming convention that indicates their purpose or theme:</p>
+<ul>
+<li><strong><code>g_</code> mapsets</strong> contain shared datasets organized by theme (e.g., <code>g_AdministrativeUnits</code>, <code>g_Elevation_Fenoscandia</code>, <code>g_Meteorology_Fenoscandia</code>).</li>
+<li><strong><code>gt_</code> mapsets</strong> contain meteorological datasets, primarily seNorge climate grids (e.g., <code>gt_Meteorology_Norway_seNorge_Precipitation_normals</code>, <code>gt_Meteorology_Norway_seNorge_SnowDepth_days</code>).</li>
+<li><strong><code>p_</code> mapsets</strong> are project-specific workspaces for datasets related to a particular project (e.g., <code>p_NiN_landskap</code>, <code>p_redlist_hotspots</code>).</li>
+<li><strong><code>u_</code> mapsets</strong> are user-specific workspaces, named using the format <code>u_user.name</code>.</li>
+</ul>
+<p>Unlike typical desktop GIS workflows—where datasets are loaded directly from individual files—GRASS works with its own internal copies of data. When you import a GeoTIFF or shapefile, GRASS converts it into an optimized GRASS raster or vector format. Analyses then operate on these internal datasets using modules that rely on GRASS’s <strong>computational region</strong>, <strong>resolution</strong>, and <strong>masking</strong> system.</p>
+</section>
+<section id="accessing-grass-data-at-nina" class="level2">
+<h2 class="anchored" data-anchor-id="accessing-grass-data-at-nina">Accessing GRASS data at NINA</h2>
+<p>NINA hosts a large collection of spatial datasets in GRASS, which can be accessed from R. However, you can only work with GRASS data when using one of NINA’s Linux servers—either the GIS server (via the Omnissa client) or one of the RStudio servers:</p>
+<ul>
+<li><a href="https://rstudio.nina.no/" class="uri">https://rstudio.nina.no/</a></li>
+<li><a href="https://rstudio-geo.nina.no/" class="uri">https://rstudio-geo.nina.no/</a></li>
+</ul>
+<p>To connect from R, use the helper function provided in the <strong>NinaR</strong> package:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"NINAnor/NinaR"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rgrass)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(NinaR)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>NinaR<span class="sc">::</span><span class="fu">grassConnect</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Calling <code>grassConnect()</code> without arguments automatically creates a user mapset inside the default location (<code>ETRS_33N</code>), named <code>u_user.name</code>, where <code>user.name</code> is your NINA login (typically <code>first.last</code>).</p>
+<p>To connect to a different location:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>NinaR<span class="sc">::</span><span class="fu">grassConnect</span>(<span class="at">location =</span> <span class="st">"ETRS_35N"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>To connect directly to a specific mapset:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>NinaR<span class="sc">::</span><span class="fu">grassConnect</span>(<span class="at">mapset =</span> <span class="st">"gt_Meteorology_Norway_seNorge_v2309_SnowDepth_month"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>You can list available datasets within the active mapset with:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">execGRASS</span>(<span class="st">"g.list"</span>, <span class="at">parameters =</span> <span class="fu">list</span>(<span class="at">type =</span> <span class="st">"vector"</span>))</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">execGRASS</span>(<span class="st">"g.list"</span>, <span class="at">parameters =</span> <span class="fu">list</span>(<span class="at">type =</span> <span class="st">"raster"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="understanding-region-resolution-and-masks" class="level2">
+<h2 class="anchored" data-anchor-id="understanding-region-resolution-and-masks">Understanding region, resolution, and masks</h2>
+<p>In GRASS GIS, the <em>computational region</em> defines the spatial extent (bounding box) and resolution at which all raster operations are performed. This region is independent of any individual dataset; instead, it is a user-controlled setting that governs how analyses align input layers and produce output. GRASS automatically resamples or aligns inputs to this region, ensuring consistent and reproducible results.</p>
+<p>You can set the region using an existing raster or vector:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">execGRASS</span>(<span class="st">"g.region"</span>, <span class="at">parameters =</span> <span class="fu">list</span>(<span class="at">raster =</span> <span class="st">"my_raster"</span>, <span class="at">res =</span> <span class="dv">100</span>))</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">execGRASS</span>(<span class="st">"g.region"</span>, <span class="at">parameters =</span> <span class="fu">list</span>(<span class="at">vector =</span> <span class="st">"my_vector"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Or you can define the region manually. For example, this bounding box covers part of the Oslofjord area in EPSG:25833 with 10 m resolution:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">execGRASS</span>(</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"g.region"</span>,</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">parameters =</span> <span class="fu">list</span>(<span class="at">n =</span> <span class="dv">6640000</span>, <span class="at">s =</span> <span class="dv">6575000</span>, <span class="at">e =</span> <span class="dv">610000</span>, <span class="at">w =</span> <span class="dv">520000</span>, <span class="at">res =</span> <span class="dv">10</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Any raster operation you perform will be constrained to this region.</p>
+<section id="masks" class="level3">
+<h3 class="anchored" data-anchor-id="masks">Masks</h3>
+<p>GRASS also uses an optional <em>mask</em>, which restricts raster calculations to a defined area. Any cells outside the mask become NULL, even if underlying data exists there. This allows you to focus analyses on specific boundaries or study areas without physically clipping datasets.</p>
+<p>Create a mask from a raster:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">execGRASS</span>(<span class="st">"r.mask"</span>, <span class="at">parameters =</span> <span class="fu">list</span>(<span class="at">raster =</span> <span class="st">"mask_raster"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Or from a vector:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">execGRASS</span>(<span class="st">"r.mask"</span>, <span class="at">parameters =</span> <span class="fu">list</span>(<span class="at">vector =</span> <span class="st">"mask_vector"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Remove the mask:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">execGRASS</span>(<span class="st">"r.mask"</span>, <span class="at">flags =</span> <span class="st">"r"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="checking-the-active-region-resolution-and-mask" class="level2">
+<h2 class="anchored" data-anchor-id="checking-the-active-region-resolution-and-mask">Checking the active region, resolution, and mask</h2>
+<p>Because region and mask settings persist until changed, it’s important to check them regularly.</p>
+<section id="print-region-human-readable" class="level3">
+<h3 class="anchored" data-anchor-id="print-region-human-readable">Print region (human-readable)</h3>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">execGRASS</span>(<span class="st">"g.region"</span>, <span class="at">flags =</span> <span class="st">"p"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This prints:</p>
+<ul>
+<li>north/south/east/west bounds<br>
+</li>
+<li>current resolution<br>
+</li>
+<li>rows/cols<br>
+</li>
+<li>data type<br>
+</li>
+<li>projection info</li>
+</ul>
+</section>
+<section id="check-whether-a-mask-is-active" class="level3">
+<h3 class="anchored" data-anchor-id="check-whether-a-mask-is-active">Check whether a mask is active</h3>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">execGRASS</span>(<span class="st">"g.list"</span>, <span class="at">parameters =</span> <span class="fu">list</span>(<span class="at">type =</span> <span class="st">"raster"</span>, <span class="at">pattern =</span> <span class="st">"MASK"</span>), <span class="at">intern =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If a mask is active, you will see <code>"MASK"</code> in the output.</p>
+<hr>
+<p>Navigate to <strong>Functions → GRASS functions</strong> to see the GRASS-related helper functions available in GeoLink. A full vignette (“GRASS vignette”) is also available under the vignette options and demonstrates how to work with GRASS datasets stored at NINA.</p>
+
+
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

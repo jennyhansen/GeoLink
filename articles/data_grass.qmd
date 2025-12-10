@@ -1,0 +1,137 @@
+---
+title: "GRASS GIS"
+description: "Overview of GRASS GIS and how it differs from typical file-based GIS workflows."
+format:
+  html:
+    toc: true
+---
+
+## Overview
+
+GRASS GIS (Geographic Resources Analysis Support System) is an open-source geospatial analysis platform built around a highly structured data management model. Instead of working with standalone files like GeoTIFFs or shapefiles, GRASS organizes all data inside a **GIS database**—a directory structure composed of *locations* and *mapsets*. Each location has a defined coordinate reference system (CRS), and every raster or vector layer stored inside it must conform to that CRS.  
+
+At NINA, locations are typically named after the CRS they use—for example, `ETRS_32N` or `ETRS_33N`. Within each location, mapsets follow a naming convention that indicates their purpose or theme:
+
+- **`g_` mapsets** contain shared datasets organized by theme (e.g., `g_AdministrativeUnits`, `g_Elevation_Fenoscandia`, `g_Meteorology_Fenoscandia`).
+- **`gt_` mapsets** contain meteorological datasets, primarily seNorge climate grids (e.g., `gt_Meteorology_Norway_seNorge_Precipitation_normals`, `gt_Meteorology_Norway_seNorge_SnowDepth_days`).
+- **`p_` mapsets** are project-specific workspaces for datasets related to a particular project (e.g., `p_NiN_landskap`, `p_redlist_hotspots`).
+- **`u_` mapsets** are user-specific workspaces, named using the format `u_user.name`.
+
+Unlike typical desktop GIS workflows—where datasets are loaded directly from individual files—GRASS works with its own internal copies of data. When you import a GeoTIFF or shapefile, GRASS converts it into an optimized GRASS raster or vector format. Analyses then operate on these internal datasets using modules that rely on GRASS's **computational region**, **resolution**, and **masking** system.
+
+## Accessing GRASS data at NINA
+
+NINA hosts a large collection of spatial datasets in GRASS, which can be accessed from R. However, you can only work with GRASS data when using one of NINA’s Linux servers—either the GIS server (via the Omnissa client) or one of the RStudio servers:
+
+- <https://rstudio.nina.no/>
+- <https://rstudio-geo.nina.no/>
+
+To connect from R, use the helper function provided in the **NinaR** package:
+
+```r
+devtools::install_github("NINAnor/NinaR")
+library(rgrass)
+library(NinaR)
+
+NinaR::grassConnect()
+```
+
+Calling `grassConnect()` without arguments automatically creates a user mapset inside the default location (`ETRS_33N`), named `u_user.name`, where `user.name` is your NINA login (typically `first.last`).
+
+To connect to a different location:
+
+```r
+NinaR::grassConnect(location = "ETRS_35N")
+```
+
+To connect directly to a specific mapset:
+
+```r
+NinaR::grassConnect(mapset = "gt_Meteorology_Norway_seNorge_v2309_SnowDepth_month")
+```
+
+You can list available datasets within the active mapset with:
+
+```r
+execGRASS("g.list", parameters = list(type = "vector"))
+execGRASS("g.list", parameters = list(type = "raster"))
+```
+
+## Understanding region, resolution, and masks
+
+In GRASS GIS, the *computational region* defines the spatial extent (bounding box) and resolution at which all raster operations are performed. This region is independent of any individual dataset; instead, it is a user-controlled setting that governs how analyses align input layers and produce output. GRASS automatically resamples or aligns inputs to this region, ensuring consistent and reproducible results.
+
+You can set the region using an existing raster or vector:
+
+```r
+execGRASS("g.region", parameters = list(raster = "my_raster", res = 100))
+execGRASS("g.region", parameters = list(vector = "my_vector"))
+```
+
+Or you can define the region manually. For example, this bounding box covers part of the Oslofjord area in EPSG:25833 with 10 m resolution:
+
+```r
+execGRASS(
+  "g.region",
+  parameters = list(n = 6640000, s = 6575000, e = 610000, w = 520000, res = 10)
+)
+```
+
+Any raster operation you perform will be constrained to this region.
+
+### Masks
+
+GRASS also uses an optional *mask*, which restricts raster calculations to a defined area. Any cells outside the mask become NULL, even if underlying data exists there. This allows you to focus analyses on specific boundaries or study areas without physically clipping datasets.
+
+Create a mask from a raster:
+
+```r
+execGRASS("r.mask", parameters = list(raster = "mask_raster"))
+```
+
+Or from a vector:
+
+```r
+execGRASS("r.mask", parameters = list(vector = "mask_vector"))
+```
+
+Remove the mask:
+
+```r
+execGRASS("r.mask", flags = "r")
+```
+
+## Checking the active region, resolution, and mask
+
+Because region and mask settings persist until changed, it’s important to check them regularly.
+
+### Print region (human-readable)
+
+```r
+execGRASS("g.region", flags = "p")
+```
+
+This prints:
+
+- north/south/east/west bounds  
+- current resolution  
+- rows/cols  
+- data type  
+- projection info  
+
+### Check whether a mask is active
+
+```r
+execGRASS("g.list", parameters = list(type = "raster", pattern = "MASK"), intern = TRUE)
+```
+
+If a mask is active, you will see `"MASK"` in the output.
+
+---
+
+Navigate to **Functions → GRASS functions** to see the GRASS-related helper functions available in GeoLink. A full vignette ("GRASS vignette") is also available under the vignette options and demonstrates how to work with GRASS datasets stored at NINA.
+
+
+
+
+
