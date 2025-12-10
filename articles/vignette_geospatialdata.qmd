@@ -1,5 +1,5 @@
 ---
-title: "Working With GeoSpatialData on the R Drive"
+title: "GeoSpatialData vignette"
 subtitle: "A practical guide to listing and importing spatial datasets using GeoLink"
 format:
   html:
