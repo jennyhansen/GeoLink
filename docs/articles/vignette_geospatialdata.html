@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>GeoLink - Welcome to GeoLink</title>
+<title>GeoLink - Working With GeoSpatialData on the R Drive</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,26 +20,60 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<link href="./assets/favicon.ico" rel="icon">
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../assets/favicon.ico" rel="icon">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -82,7 +116,7 @@ ul.task-list li input[type="checkbox"] {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">GeoLink</span>
     </a>
   </div>
@@ -93,7 +127,7 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="./index.html" aria-current="page"> 
+    <a class="nav-link" href="../index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item dropdown ">
@@ -102,23 +136,23 @@ ul.task-list li input[type="checkbox"] {
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-data-sources">    
         <li>
-    <a class="dropdown-item" href="./articles/geodata_sources.html">
+    <a class="dropdown-item" href="../articles/geodata_sources.html">
  <span class="dropdown-text">Overview</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./articles/data_geospatialdata.html">
+    <a class="dropdown-item" href="../articles/data_geospatialdata.html">
  <span class="dropdown-text">GeoSpatialData on R Drive</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./articles/data_grass.html">
+    <a class="dropdown-item" href="../articles/data_grass.html">
  <span class="dropdown-text">GRASS GIS</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./articles/data_gisdb.html">
+    <a class="dropdown-item" href="../articles/data_gisdb.html">
  <span class="dropdown-text">PostgreSQL GIS Database</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./articles/data_s3.html">
+    <a class="dropdown-item" href="../articles/data_s3.html">
  <span class="dropdown-text">S3 buckets</span></a>
   </li>  
     </ul>
@@ -129,15 +163,15 @@ ul.task-list li input[type="checkbox"] {
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-functions">    
         <li>
-    <a class="dropdown-item" href="./articles/functions.html">
+    <a class="dropdown-item" href="../articles/functions.html">
  <span class="dropdown-text">Overview</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./articles/functions_geospatialdata.html">
+    <a class="dropdown-item" href="../articles/functions_geospatialdata.html">
  <span class="dropdown-text">R:GeoSpatialData</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./articles/functions_s3.html">
+    <a class="dropdown-item" href="../articles/functions_s3.html">
  <span class="dropdown-text">S3 functions</span></a>
   </li>  
     </ul>
@@ -148,7 +182,7 @@ ul.task-list li input[type="checkbox"] {
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-vignettes">    
         <li>
-    <a class="dropdown-item" href="./articles/vignette_geospatialdata.html">
+    <a class="dropdown-item" href="../articles/vignette_geospatialdata.html">
  <span class="dropdown-text">Working With GeoSpatialData on the R Drive</span></a>
   </li>  
         <li class="dropdown-header">R:GeoSpatialData vignette</li>
@@ -166,14 +200,46 @@ ul.task-list li input[type="checkbox"] {
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#listing-content-inside-the-geospatialdata-directory" id="toc-listing-content-inside-the-geospatialdata-directory" class="nav-link" data-scroll-target="#listing-content-inside-the-geospatialdata-directory">Listing content inside the GeoSpatialData directory</a>
+  <ul class="collapse">
+  <li><a href="#list-the-top-level-categories" id="toc-list-the-top-level-categories" class="nav-link" data-scroll-target="#list-the-top-level-categories">List the top-level categories</a></li>
+  <li><a href="#list-only-folders-within-a-category" id="toc-list-only-folders-within-a-category" class="nav-link" data-scroll-target="#list-only-folders-within-a-category">List only folders within a category</a></li>
+  <li><a href="#list-only-files-in-a-deeper-subfolder" id="toc-list-only-files-in-a-deeper-subfolder" class="nav-link" data-scroll-target="#list-only-files-in-a-deeper-subfolder">List only files in a deeper subfolder</a></li>
+  <li><a href="#use-a-full-absolute-path" id="toc-use-a-full-absolute-path" class="nav-link" data-scroll-target="#use-a-full-absolute-path">Use a full absolute path</a></li>
+  </ul></li>
+  <li><a href="#importing-data-from-geospatialdata" id="toc-importing-data-from-geospatialdata" class="nav-link" data-scroll-target="#importing-data-from-geospatialdata">Importing data from GeoSpatialData</a>
+  <ul class="collapse">
+  <li><a href="#import-a-raster-geotiff" id="toc-import-a-raster-geotiff" class="nav-link" data-scroll-target="#import-a-raster-geotiff">Import a raster (GeoTIFF)</a></li>
+  <li><a href="#import-a-vector-shapefile" id="toc-import-a-vector-shapefile" class="nav-link" data-scroll-target="#import-a-vector-shapefile">Import a vector (Shapefile)</a></li>
+  <li><a href="#import-from-a-file-geodatabase-.gdb" id="toc-import-from-a-file-geodatabase-.gdb" class="nav-link" data-scroll-target="#import-from-a-file-geodatabase-.gdb">Import from a file geodatabase (.gdb)</a></li>
+  </ul></li>
+  <li><a href="#supported-file-formats" id="toc-supported-file-formats" class="nav-link" data-scroll-target="#supported-file-formats">Supported file formats</a>
+  <ul class="collapse">
+  <li><a href="#vector-formats" id="toc-vector-formats" class="nav-link" data-scroll-target="#vector-formats">Vector formats</a></li>
+  <li><a href="#raster-formats" id="toc-raster-formats" class="nav-link" data-scroll-target="#raster-formats">Raster formats</a></li>
+  </ul></li>
+  <li><a href="#common-errors-and-how-to-understand-them" id="toc-common-errors-and-how-to-understand-them" class="nav-link" data-scroll-target="#common-errors-and-how-to-understand-them">Common errors and how to understand them</a>
+  <ul class="collapse">
+  <li><a href="#this-function-must-be-run-on-a-nina-server." id="toc-this-function-must-be-run-on-a-nina-server." class="nav-link" data-scroll-target="#this-function-must-be-run-on-a-nina-server."><strong>“This function must be run on a NINA server.”</strong></a></li>
+  <li><a href="#the-folder-does-not-exist-or-cannot-be-accessed." id="toc-the-folder-does-not-exist-or-cannot-be-accessed." class="nav-link" data-scroll-target="#the-folder-does-not-exist-or-cannot-be-accessed."><strong>“The folder does not exist or cannot be accessed.”</strong></a></li>
+  <li><a href="#you-must-specify-a-layer-name" id="toc-you-must-specify-a-layer-name" class="nav-link" data-scroll-target="#you-must-specify-a-layer-name"><strong>“You must specify a ‘layer’ name…”</strong></a></li>
+  </ul></li>
+  <li><a href="#best-practices-for-working-with-geospatialdata" id="toc-best-practices-for-working-with-geospatialdata" class="nav-link" data-scroll-target="#best-practices-for-working-with-geospatialdata">Best practices for working with GeoSpatialData</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Welcome to GeoLink</h1>
+<h1 class="title">Working With GeoSpatialData on the R Drive</h1>
+<p class="subtitle lead">A practical guide to listing and importing spatial datasets using GeoLink</p>
 </div>
 
 
@@ -190,12 +256,157 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>GeoLink is a new initiative at NINA designed to make it easier for researchers and engineers to access, understand, and use the organisation’s geospatial data. Over decades, NINA has accumulated extensive datasets on species, climate, land use, ecosystems, and human activity—resources that are central to our research and activities. However, much of this data is scattered across different repositories, poorly catalogued, and often difficult for non-experts to import into their workflows. As a result, NINA employees spend too much time searching for, re-downloading, or re-processing data that already exists. GeoLink aims to reduce these barriers by creating a shared overview of environmental geospatial datasets and developing practical tools that make the data easy to find and use.</p>
-<p>The project focuses on two main areas: improving data visibility and building user-friendly tools. First, GeoLink will compile an updated, researcher-driven inventory of the most relevant geospatial datasets hosted at NINA. This will be prioritized for national-scale environmental data frequently used in ecological modelling and land-use planning. In parallel, will be the development of functions that allow users to import “analysis-ready” geospatial data directly into their workflow without needing advanced technical skills. This includes exploring storage solutions, ensuring interoperability, and laying the groundwork for long-term alignment with Miljødata.</p>
-<p>By improving access to shared data, GeoLink supports more efficient research, reduces duplicated effort, and strengthens collaboration across departments. Easier access to geospatial resources will help new staff get up to speed faster, lower the technical threshold for working with spatial data, and reduce pressure on NINA’s IT infrastructure. Ultimately, the project will provide a strategy for accessing and working with geospatial data as our organization continues to grow.</p>
-<p>Use the navigation bar on the top to view the various data sources and explore functions and how-to vignettes.</p>
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p>NINA maintains a large, shared collection of raster and vector datasets on the <strong>R: drive</strong>.</p>
+<p>If you are on a Linux server, it can be accessed these two ways:</p>
+<pre><code>/data/R/GeoSpatialData
+~/Mounts/R/GeoSpatialData
+</code></pre>
+<p>This directory contains national base layers, monitoring datasets, elevation models, hydrological products, meteorological grids, and many other commonly used spatial layers.</p>
+<p>The <strong>GeoLink</strong> package provides two helper functions to make it easier to <em>browse</em> and <em>import</em> these datasets directly from R:</p>
+<ul>
+<li><code>list_from_rgsd()</code> — lists files and subfolders within the GeoSpatialData directory<br>
+</li>
+<li><code>import_from_rgsd()</code> — loads spatial data (vector or raster) into R using <code>sf</code>, <code>terra</code>, or <code>sfarrow</code></li>
+</ul>
+<p>This vignette shows how to use both functions.</p>
+<blockquote class="blockquote">
+<p><strong>Important:</strong> These functions only work on NINA servers. You must be working on the GIS server (connect via Omnissa Horizon Client) or one of the RStudio servers, <a href="https://rstudio.nina.no/">https://rstudio.nina.no/</a> or <a href="https://rstudio-geo.nina.no/">https://rstudio-geo.nina.no/</a></p>
+</blockquote>
+<hr>
+</section>
+<section id="listing-content-inside-the-geospatialdata-directory" class="level1">
+<h1>Listing content inside the GeoSpatialData directory</h1>
+<p>The GeoSpatialData folder is large, and navigating it manually can be difficult.<br>
+<code>list_from_rgsd()</code> provides a simple way to explore folders and datasets.</p>
+<section id="list-the-top-level-categories" class="level3">
+<h3 class="anchored" data-anchor-id="list-the-top-level-categories">List the top-level categories</h3>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(GeoLink)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">list_from_rgsd</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This returns a vector of full paths, sorted with folders first. It mirrors what you see under <code>/data/R/GeoSpatialData</code> in a file browser.</p>
+</section>
+<section id="list-only-folders-within-a-category" class="level3">
+<h3 class="anchored" data-anchor-id="list-only-folders-within-a-category">List only folders within a category</h3>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">list_from_rgsd</span>(<span class="st">"Topography"</span>, <span class="at">type =</span> <span class="st">"folder"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This is useful when exploring unfamiliar areas of the directory.</p>
+</section>
+<section id="list-only-files-in-a-deeper-subfolder" class="level3">
+<h3 class="anchored" data-anchor-id="list-only-files-in-a-deeper-subfolder">List only files in a deeper subfolder</h3>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">list_from_rgsd</span>(</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Hydrography/Norway_Catchments/Original"</span>,</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">"file"</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="use-a-full-absolute-path" class="level3">
+<h3 class="anchored" data-anchor-id="use-a-full-absolute-path">Use a full absolute path</h3>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">list_from_rgsd</span>(</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"/data/R/GeoSpatialData/LandCover/Europe_Copernicus_HighResolutionLayers/Original"</span>,</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">"both"</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If you supply either a full path or a subpath relative to GeoSpatialData, the function will figure out the correct folder as long as it exists.</p>
+<hr>
+</section>
+</section>
+<section id="importing-data-from-geospatialdata" class="level1">
+<h1>Importing data from GeoSpatialData</h1>
+<p>Once you locate the dataset you want, you can load it using <code>import_from_rgsd()</code>.<br>
+The function automatically detects:</p>
+<ul>
+<li>whether the file is <strong>vector</strong> or <strong>raster</strong></li>
+<li>whether to use <strong>sf</strong>, <strong>terra</strong>, or <strong>sfarrow</strong></li>
+<li>whether additional arguments (like a GPKG/GDB layer) are needed</li>
+</ul>
+<section id="import-a-raster-geotiff" class="level2">
+<h2 class="anchored" data-anchor-id="import-a-raster-geotiff">Import a raster (GeoTIFF)</h2>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>elev <span class="ot">&lt;-</span> <span class="fu">import_from_rgsd</span>(</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Elevation/Fenoscandia_DEM_10m/Original/dem_10m_fenoscandia.tif"</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>elev</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The function returns a <code>SpatRaster</code> object from the <code>terra</code> package.</p>
+</section>
+<section id="import-a-vector-shapefile" class="level2">
+<h2 class="anchored" data-anchor-id="import-a-vector-shapefile">Import a vector (Shapefile)</h2>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>huts <span class="ot">&lt;-</span> <span class="fu">import_from_rgsd</span>(</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Buildings/Norway_FKB_Buildings/Processed/N50_TouristCabins/Norway_TouristCabins_ETRS89_UTM_zone_33N.shp"</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>huts</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This returns an <code>sf</code> object.</p>
+</section>
+<section id="import-from-a-file-geodatabase-.gdb" class="level2">
+<h2 class="anchored" data-anchor-id="import-from-a-file-geodatabase-.gdb">Import from a file geodatabase (.gdb)</h2>
+<p>GDB files contain multiple layers, so you must specify one:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>cover <span class="ot">&lt;-</span> <span class="fu">import_from_rgsd</span>(</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">name =</span> <span class="st">"/data/R/GeoSpatialData/Topography/Norway_N50/Original/versjon20241231/N50 Kartdata FGDB-format/Basisdata_03_Oslo_25832_N50Kartdata_FGDB.gdb"</span>,</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">layer =</span> <span class="st">"N50_Arealdekke_omrade"</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>To list available layers:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>sf<span class="sc">::</span><span class="fu">st_layers</span>(<span class="st">"/data/R/GeoSpatialData/Topography/Norway_N50/Original/versjon20241231/N50 Kartdata FGDB-format/Basisdata_03_Oslo_25832_N50Kartdata_FGDB.gdb"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<hr>
+</section>
+</section>
+<section id="supported-file-formats" class="level1">
+<h1>Supported file formats</h1>
+<p><code>import_from_rgsd()</code> supports all common formats in the GeoSpatialData folder:</p>
+<section id="vector-formats" class="level3">
+<h3 class="anchored" data-anchor-id="vector-formats">Vector formats</h3>
+<ul>
+<li><code>.shp</code> (ESRI Shapefile)</li>
+<li><code>.geojson</code> (GeoJSON)</li>
+<li><code>.gpkg</code> (GeoPackage — requires specifying a layer)</li>
+<li><code>.gdb</code> (ESRI File Geodatabase — requires specifying a layer)</li>
+<li><code>.parquet</code> (GeoParquet)*</li>
+</ul>
+<p>* Parquet files are not yet available in the GeoSpatialData folder at NINA, but support will be added as datasets begin adopting the format.</p>
+</section>
+<section id="raster-formats" class="level3">
+<h3 class="anchored" data-anchor-id="raster-formats">Raster formats</h3>
+<ul>
+<li><code>.tif</code> / <code>.tiff</code> (GeoTIFF)</li>
+<li><code>.img</code></li>
+<li><code>.asc</code></li>
+<li><code>.vrt</code></li>
+<li><code>.nc</code> (NetCDF rasters)</li>
+</ul>
+<p>Unsupported formats produce a clear error message.</p>
+<hr>
+</section>
+</section>
+<section id="common-errors-and-how-to-understand-them" class="level1">
+<h1>Common errors and how to understand them</h1>
+<section id="this-function-must-be-run-on-a-nina-server." class="level3">
+<h3 class="anchored" data-anchor-id="this-function-must-be-run-on-a-nina-server."><strong>“This function must be run on a NINA server.”</strong></h3>
+<p>You are running the function outside NINA’s network environment.<br>
+Switch to a Linux/RStudio server.</p>
+</section>
+<section id="the-folder-does-not-exist-or-cannot-be-accessed." class="level3">
+<h3 class="anchored" data-anchor-id="the-folder-does-not-exist-or-cannot-be-accessed."><strong>“The folder does not exist or cannot be accessed.”</strong></h3>
+<p>The path is incorrect.<br>
+Check that you are using:</p>
+<ul>
+<li>a valid subpath relative to <code>/data/R/GeoSpatialData</code>, or<br>
+</li>
+<li>a full absolute path starting with <code>/data/R/GeoSpatialData</code>.</li>
+</ul>
+</section>
+<section id="you-must-specify-a-layer-name" class="level3">
+<h3 class="anchored" data-anchor-id="you-must-specify-a-layer-name"><strong>“You must specify a ‘layer’ name…”</strong></h3>
+<p>You are reading a GPKG or GDB.<br>
+Run <code>sf::st_layers(path)</code> to see available layers.</p>
+<hr>
+</section>
+</section>
+<section id="best-practices-for-working-with-geospatialdata" class="level1">
+<h1>Best practices for working with GeoSpatialData</h1>
+<p>✔ Use <code>list_from_rgsd()</code> to explore before importing<br>
+✔ Prefer data in the <code>Original</code> subfolder unless you need a processed version<br>
+✔ Store <em>derived</em> data in your own project folder, not in GeoSpatialData<br>
+✔ Avoid copying files locally unless necessary<br>
+✔ Use full absolute paths for reproducibility</p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

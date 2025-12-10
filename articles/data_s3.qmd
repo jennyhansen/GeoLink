@@ -84,7 +84,7 @@ Great for workflows where models or scripts generate outputs automatically on se
 
 ---
 
-# 🔌 Where is NINA’s S3 located?
+Where is NINA’s S3 located?
 
 NINA’s S3 system is hosted **internally**, through a MinIO-based S3-compatible service.
 
@@ -99,7 +99,7 @@ This is not an external cloud service — it runs entirely inside NINA’s netwo
 You can access S3 only from:
 
 - the **GIS server**
-- **RStudio servers** (rstudio.nina.no or rstudio-geo)
+- **RStudio servers** (rstudio.nina.no or rstudio-geo.nina.no)
 - or a NINA computer connected via VPN
 
 This ensures data security and compliance.

@@ -143,6 +143,18 @@ ul.task-list li input[type="checkbox"] {
   </li>  
     </ul>
   </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-vignettes" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Vignettes</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-vignettes">    
+        <li>
+    <a class="dropdown-item" href="../articles/vignette_geospatialdata.html">
+ <span class="dropdown-text">Working With GeoSpatialData on the R Drive</span></a>
+  </li>  
+        <li class="dropdown-header">R:GeoSpatialData vignette</li>
+    </ul>
+  </li>
 </ul>
           </div> <!-- /navcollapse -->
           <div class="quarto-navbar-tools">
@@ -170,7 +182,6 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#works-well-with-r-and-python" id="toc-works-well-with-r-and-python" class="nav-link" data-scroll-target="#works-well-with-r-and-python"><strong>4. Works well with R and Python</strong></a></li>
   <li><a href="#integrates-with-automation" id="toc-integrates-with-automation" class="nav-link" data-scroll-target="#integrates-with-automation"><strong>5. Integrates with automation</strong></a></li>
   </ul></li>
-  <li><a href="#where-is-ninas-s3-located" id="toc-where-is-ninas-s3-located" class="nav-link" data-scroll-target="#where-is-ninas-s3-located">🔌 Where is NINA’s S3 located?</a></li>
   </ul>
 </nav>
     </div>
@@ -296,10 +307,7 @@ ul.task-list li input[type="checkbox"] {
 <h3 class="anchored" data-anchor-id="integrates-with-automation"><strong>5. Integrates with automation</strong></h3>
 <p>Great for workflows where models or scripts generate outputs automatically on servers.</p>
 <hr>
-</section>
-</section>
-<section id="where-is-ninas-s3-located" class="level1">
-<h1>🔌 Where is NINA’s S3 located?</h1>
+<p>Where is NINA’s S3 located?</p>
 <p>NINA’s S3 system is hosted <strong>internally</strong>, through a MinIO-based S3-compatible service.</p>
 <p>Internal endpoint:</p>
 <pre><code>s3-int-1.nina.no</code></pre>
@@ -307,13 +315,14 @@ ul.task-list li input[type="checkbox"] {
 <p>You can access S3 only from:</p>
 <ul>
 <li>the <strong>GIS server</strong></li>
-<li><strong>RStudio servers</strong> (rstudio.nina.no or rstudio-geo)</li>
+<li><strong>RStudio servers</strong> (rstudio.nina.no or rstudio-geo.nina.no)</li>
 <li>or a NINA computer connected via VPN</li>
 </ul>
 <p>This ensures data security and compliance.</p>
 <p>As part of the GeoLink project, we have developed several functions for working with geospatial data on S3 buckets. You can read the documentation at <strong>Functions → S3 functions</strong>. You can also learn to work with the S3 protocol using the <strong>S3 vignette</strong> located under <strong>Vignettes → S3Vignette</strong>.</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

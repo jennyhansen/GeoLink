@@ -32,6 +32,11 @@ website:
             text: R:GeoSpatialData
           - href: articles/functions_s3.qmd
             text: S3 functions
+            
+      - text: Vignettes
+        menu: 
+          - href: articles/vignette_geospatialdata.qmd
+          - text: R:GeoSpatialData vignette
 
 format:
   html:

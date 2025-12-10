@@ -1,0 +1,188 @@
+---
+title: "Working With GeoSpatialData on the R Drive"
+subtitle: "A practical guide to listing and importing spatial datasets using GeoLink"
+format:
+  html:
+    toc: true
+    toc-depth: 3
+---
+
+# Introduction
+
+NINA maintains a large, shared collection of raster and vector datasets on the **R: drive**.
+
+If you are on a Linux server, it can be accessed these two ways:
+
+```
+/data/R/GeoSpatialData
+~/Mounts/R/GeoSpatialData
+
+```
+
+This directory contains national base layers, monitoring datasets, elevation models, 
+hydrological products, meteorological grids, and many other commonly used spatial layers.
+
+The **GeoLink** package provides two helper functions to make it easier to *browse* and *import* these datasets directly from R:
+
+- `list_from_rgsd()` — lists files and subfolders within the GeoSpatialData directory  
+- `import_from_rgsd()` — loads spatial data (vector or raster) into R using `sf`, `terra`, or `sfarrow`
+
+This vignette shows how to use both functions.
+
+> **Important:** These functions only work on NINA servers. You must be working on
+the GIS server (connect via Omnissa Horizon Client) or one of the RStudio servers,
+[https://rstudio.nina.no/](https://rstudio.nina.no/) or
+[https://rstudio-geo.nina.no/](https://rstudio-geo.nina.no/)
+
+---
+
+# Listing content inside the GeoSpatialData directory
+
+The GeoSpatialData folder is large, and navigating it manually can be difficult.  
+`list_from_rgsd()` provides a simple way to explore folders and datasets.
+
+### List the top-level categories
+
+```r
+library(GeoLink)
+
+list_from_rgsd()
+```
+
+This returns a vector of full paths, sorted with folders first. It mirrors what you see under `/data/R/GeoSpatialData` in a file browser.
+
+### List only folders within a category
+
+```r
+list_from_rgsd("Topography", type = "folder")
+```
+
+This is useful when exploring unfamiliar areas of the directory.
+
+### List only files in a deeper subfolder
+
+```r
+list_from_rgsd(
+  "Hydrography/Norway_Catchments/Original",
+  type = "file"
+)
+```
+
+### Use a full absolute path
+
+```r
+list_from_rgsd(
+  "/data/R/GeoSpatialData/LandCover/Europe_Copernicus_HighResolutionLayers/Original",
+  type = "both"
+)
+```
+
+If you supply either a full path or a subpath relative to GeoSpatialData, 
+the function will figure out the correct folder as long as it exists.
+
+---
+
+# Importing data from GeoSpatialData
+
+Once you locate the dataset you want, you can load it using `import_from_rgsd()`.  
+The function automatically detects:
+
+- whether the file is **vector** or **raster**
+- whether to use **sf**, **terra**, or **sfarrow**
+- whether additional arguments (like a GPKG/GDB layer) are needed
+
+## Import a raster (GeoTIFF)
+
+```r
+elev <- import_from_rgsd(
+  "Elevation/Fenoscandia_DEM_10m/Original/dem_10m_fenoscandia.tif"
+)
+elev
+```
+
+The function returns a `SpatRaster` object from the `terra` package.
+
+## Import a vector (Shapefile)
+
+```r
+huts <- import_from_rgsd(
+  "Buildings/Norway_FKB_Buildings/Processed/N50_TouristCabins/Norway_TouristCabins_ETRS89_UTM_zone_33N.shp"
+)
+huts
+```
+
+This returns an `sf` object.
+
+## Import from a file geodatabase (.gdb)
+
+GDB files contain multiple layers, so you must specify one:
+
+```r
+cover <- import_from_rgsd(
+  name = "/data/R/GeoSpatialData/Topography/Norway_N50/Original/versjon20241231/N50 Kartdata FGDB-format/Basisdata_03_Oslo_25832_N50Kartdata_FGDB.gdb",
+  layer = "N50_Arealdekke_omrade"
+)
+```
+
+To list available layers:
+
+```r
+sf::st_layers("/data/R/GeoSpatialData/Topography/Norway_N50/Original/versjon20241231/N50 Kartdata FGDB-format/Basisdata_03_Oslo_25832_N50Kartdata_FGDB.gdb")
+```
+
+---
+
+# Supported file formats
+
+`import_from_rgsd()` supports all common formats in the GeoSpatialData folder:
+
+### Vector formats
+- `.shp` (ESRI Shapefile)
+- `.geojson` (GeoJSON)
+- `.gpkg` (GeoPackage — requires specifying a layer)
+- `.gdb` (ESRI File Geodatabase — requires specifying a layer)
+- `.parquet` (GeoParquet)*
+
+\* Parquet files are not yet available in the GeoSpatialData folder at NINA, 
+but support will be added as datasets begin adopting the format.
+
+
+### Raster formats
+- `.tif` / `.tiff` (GeoTIFF)
+- `.img`
+- `.asc`
+- `.vrt`
+- `.nc` (NetCDF rasters)
+
+Unsupported formats produce a clear error message.
+
+---
+
+# Common errors and how to understand them
+
+### **“This function must be run on a NINA server.”**
+You are running the function outside NINA’s network environment.  
+Switch to a Linux/RStudio server.
+
+### **“The folder does not exist or cannot be accessed.”**
+The path is incorrect.  
+Check that you are using:
+
+- a valid subpath relative to `/data/R/GeoSpatialData`, or  
+- a full absolute path starting with `/data/R/GeoSpatialData`.
+
+### **“You must specify a ‘layer’ name…”**
+You are reading a GPKG or GDB.  
+Run `sf::st_layers(path)` to see available layers.
+
+---
+
+# Best practices for working with GeoSpatialData
+
+✔ Use `list_from_rgsd()` to explore before importing  
+✔ Prefer data in the `Original` subfolder unless you need a processed version  
+✔ Store *derived* data in your own project folder, not in GeoSpatialData  
+✔ Avoid copying files locally unless necessary  
+✔ Use full absolute paths for reproducibility  
+
+
